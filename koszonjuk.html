@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+<title>Köszönjük a rendelését! · Hegyháti Finomságok</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" sizes="256x256" href="media/favicon.png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<div class="amb" aria-hidden="true"><div class="amb__vig"></div></div>
+
+<!-- @nav -->
+<nav class="nav" aria-label="Fő navigáció">
+  <a href="index.html" class="nav__brand">
+    <img class="nav__logo" src="media/logo-hegyhati.webp" alt="" width="42" height="42">
+    <span><strong>Hegyháti</strong><small>Finomságok</small></span>
+  </a>
+  <div class="nav__links">
+    <a href="index.html" class="nav__link">Főoldal</a>
+    <a href="termekek.html" class="nav__link">Termékek</a>
+    <a href="kiszallitas.html" class="nav__link">Kiszállítás / Előrendelés</a>
+    <a href="rolunk.html" class="nav__link">Történetünk</a>
+    <a href="kapcsolat.html" class="nav__link">Kapcsolat</a>
+  </div>
+  <div class="nav__cta">
+    <button class="cart-btn" id="cartBtn" aria-label="Kosár megnyitása">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1 1 0 0 1-1 1.1H5.8a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+      <span class="cart-btn__badge" id="cartBadge">0</span>
+    </button>
+    <button class="burger" aria-label="Menü" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+<!-- @/nav -->
+
+<!-- @mnav -->
+<div class="mnav">
+  <a href="index.html">Főoldal</a>
+  <a href="termekek.html">Termékek <small>35 finomság</small></a>
+  <a href="kiszallitas.html">Kiszállítás <small>előrendelés</small></a>
+  <a href="rolunk.html">Történetünk</a>
+  <a href="kapcsolat.html">Kapcsolat</a>
+  <div class="mnav__foot">
+    Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00<br>
+    <a href="tel:+36303007422">+36 30 300 7422</a>
+  </div>
+</div>
+<!-- @/mnav -->
+
+<main class="wrap thanks" style="padding-top:9.5rem;padding-bottom:5rem">
+  <div class="thanks__icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5L19.5 7"/></svg>
+  </div>
+  <h1>Köszönjük a rendelését!</h1>
+  <p class="thanks__oid">Rendelés-azonosító: <b id="thOid" class="num-tab">…</b> · <span id="thStatus"></span></p>
+  <p class="lead" style="margin-top:1.2rem">Hamarosan <strong style="color:var(--ink)">telefonon visszahívjuk</strong> a megadott számon, hogy egyeztessük a pontos súlyokat, a végösszeget és az átvétel részleteit. Mérlegelt árut adunk, így a végösszeg a mérés után válik véglegessé.</p>
+
+  <div class="co-block thanks__box">
+    <h2 style="font-size:1.35rem;margin-bottom:1.2rem">A rendelése</h2>
+    <div class="sum-rows" id="thRows"></div>
+  </div>
+
+  <div class="co-block" id="thPickupBox" style="display:none">
+    <h2 style="font-size:1.35rem;margin-bottom:.9rem">Átvétel az üzletben</h2>
+    <p style="color:var(--muted)">Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · <span id="thDay"></span><br>Kérjük, a rendelés-azonosítót hozza magával (elég a telefonján).</p>
+  </div>
+
+  <div class="co-block" id="thDeliveryBox" style="display:none">
+    <h2 style="font-size:1.35rem;margin-bottom:.9rem">Kiszállítás előrendeléssel</h2>
+    <p style="color:var(--muted)" id="thAddr"></p>
+  </div>
+
+  <p id="thDemo" style="margin-top:1.6rem;padding:.9rem 1.2rem;border:1px solid rgba(217,152,56,.4);border-radius:10px;background:rgba(217,152,56,.1);color:var(--accent-soft);font-size:.9rem;display:none">
+    Ez egy bemutató (demó) rendelés volt. Az online bankkártyás fizetés bemutató módban fut, a rendelést telefonon erősítjük meg.
+  </p>
+
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.2rem">
+    <a href="index.html" class="btn btn--ghost">Vissza a főoldalra</a>
+    <a href="termekek.html" class="btn btn--solid">Vásárlás folytatása</a>
+  </div>
+</main>
+
+<!-- @footer mini -->
+<footer class="footer" style="margin-top:0">
+  <div class="wrap">
+    <div class="footer__bottom" style="border-top:0">
+      <span>© 2026 Hegyháti Finomságok · Pécs</span>
+      <span><a href="kapcsolat.html" style="color:var(--accent-soft)">Kapcsolat</a> · <a href="tel:+36303007422" style="color:var(--accent-soft)" class="num-tab">+36 30 300 7422</a></span>
+    </div>
+  </div>
+</footer>
+<!-- @/footer -->
+
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/data/products.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shop/cart.js"></script>
+<script src="js/shop/cart-drawer.js"></script>
+<script src="js/shop/order.js"></script>
+<script>
+(function () {
+  const order = window.HFORDER ? HFORDER.load() : null;
+  const fmt = HF.formatFt;
+  if (!order) { location.replace('termekek.html'); return; }
+
+  document.getElementById('thOid').textContent = order.id;
+  const status = new URLSearchParams(location.search).get('status');
+  document.getElementById('thStatus').textContent =
+    status === 'paid' ? 'fizetve (demó)' : 'fizetés átvételkor';
+  if (window.HF && HF.cleanUrl) document.querySelectorAll('a[href]').forEach(a => a.setAttribute('href', HF.cleanUrl(a.getAttribute('href'))));
+
+  const rows = order.items.map(i => {
+    const opts = [i.spice, i.sliced ? 'szeletelve' : null].filter(Boolean).join(', ');
+    const q = i.qtyLabel || (String(i.weightKg).replace('.', ',') + ' kg');
+    return `<div class="sum-row"><span>${i.name}${opts ? ' <span style="opacity:.7">(' + opts + ')</span>' : ''} · ${q}</span><b class="num-tab">~${fmt(i.estLinePrice)}</b></div>`;
+  });
+  rows.push(`<div class="sum-row"><span>Szállítás</span><b>${order.totals.shippingFee ? fmt(order.totals.shippingFee) : 'Ingyenes'}</b></div>`);
+  rows.push(`<div class="sum-row total"><span>Becsült végösszeg</span><b class="num-tab">~${fmt(order.totals.estTotal)}</b></div>`);
+  rows.push(`<div class="sum-row"><span style="font-size:.8rem">${HF.PRICE_NOTE.line}</span></div>`);
+  document.getElementById('thRows').innerHTML = rows.join('');
+
+  if (order.fulfillment.method === 'pickup') {
+    document.getElementById('thPickupBox').style.display = '';
+    const dayInfo = { kedd: 'kedd, 6:00-14:00', szerda: 'szerda, 6:00-14:00', csutortok: 'csütörtök, 6:00-14:00', pentek: 'péntek, 6:00-14:00', szombat: 'szombat, 6:00-12:00' };
+    document.getElementById('thDay').textContent = dayInfo[order.fulfillment.day] || dayInfo.kedd;
+  } else {
+    document.getElementById('thDeliveryBox').style.display = '';
+    const a = order.fulfillment.address;
+    const day = order.fulfillment.day ? (order.fulfillment.day.toLowerCase() + 'i kiszállítás, ' + HF.DELIVERY.cadenceShort + '. ') : '';
+    document.getElementById('thAddr').textContent = a.zip + ' ' + a.city + ', ' + a.street + '. ' + day.charAt(0).toUpperCase() + day.slice(1) + 'Hűtve szállítjuk, a pontos időpontot telefonon egyeztetjük.';
+  }
+  if (order.meta && order.meta.demo) document.getElementById('thDemo').style.display = 'block';
+
+  /* A kosár ITT ürül, a rendelés sikeres lezárultával. */
+  if (window.HFCART) HFCART.clear();
+})();
+</script>
+</body>
+</html>

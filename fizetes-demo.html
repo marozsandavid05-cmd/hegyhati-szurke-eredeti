@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+<title>Fizetés (demó) · Hegyháti Finomságok</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" sizes="256x256" href="media/favicon.png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<div class="amb" aria-hidden="true"><div class="amb__vig"></div></div>
+
+<div class="demo-band">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
+  DEMÓ fizetőoldal, valódi terhelés nem történik. Élesben itt a Barion biztonságos fizetőoldala jelenik meg.
+</div>
+
+<main style="min-height:82vh;display:grid;place-items:center;padding:4rem var(--pad)">
+  <div style="width:100%;max-width:480px">
+    <div style="text-align:center;margin-bottom:2rem">
+      <p class="eyebrow" style="justify-content:center">Biztonságos fizetés</p>
+      <h1 style="font-size:var(--step-2);margin-top:.8rem">Bankkártyás fizetés</h1>
+    </div>
+    <div class="payform">
+      <div class="payform__head">
+        <div class="payform__merchant">Hegyháti Finomságok<small id="payOid">Rendelés: …</small></div>
+        <div class="payform__total num-tab" id="payTotal">…</div>
+      </div>
+      <div class="fld">
+        <label for="ccnum">Kártyaszám</label>
+        <input id="ccnum" value="•••• •••• •••• ••••" disabled>
+      </div>
+      <div class="fgrid">
+        <div class="fld">
+          <label for="ccexp">Lejárat</label>
+          <input id="ccexp" value="••/••" disabled>
+        </div>
+        <div class="fld">
+          <label for="cccvc">CVC</label>
+          <input id="cccvc" value="•••" disabled>
+        </div>
+      </div>
+      <button class="btn btn--solid" id="payBtn" type="button">
+        <span class="pay-label">Fizetés</span>
+        <span class="pay-spin" aria-hidden="true"></span>
+      </button>
+      <a class="payform__cancel" id="payCancel" href="penztar.html">Mégsem, vissza a pénztárhoz</a>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.82rem;margin-top:1.6rem">A kártyamezők a demóban nem aktívak. Éles üzemben a fizetés a Barion oldalán történik, a kártyaadatok hozzánk nem jutnak el.</p>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/data/products.js"></script>
+<script src="js/shop/cart.js"></script>
+<script src="js/shop/order.js"></script>
+<script>
+(function () {
+  const order = window.HFORDER ? HFORDER.load() : null;
+  const oid = new URLSearchParams(location.search).get('order');
+  if (!order || (oid && order.id !== oid)) { location.replace('penztar.html'); return; }
+  document.getElementById('payOid').textContent = 'Rendelés: ' + order.id;
+  document.getElementById('payTotal').textContent = '~' + HF.formatFt(order.totals.estTotal);
+  const btn = document.getElementById('payBtn');
+  btn.addEventListener('click', () => {
+    btn.classList.add('is-paying');
+    btn.disabled = true;
+    setTimeout(() => {
+      HFORDER.setStatus('paid_demo');
+      location.href = 'koszonjuk.html?order=' + encodeURIComponent(order.id) + '&status=paid';
+    }, 1500);
+  });
+})();
+</script>
+</body>
+</html>

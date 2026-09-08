@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+<title>Hegyháti Finomságok · Kézműves húsbolt Pécsről, saját tenyésztésből</title>
+<meta name="description" content="Saját földből, saját kézből. Kézműves füstölt áruk, kolbászok, sonkák, szalámik egy pécsi kistermelő házaspártól. Üzlet a Pécsi Vásárcsarnokban (Pécs, Zólyom utca 4.), kiszállítás előrendeléssel Pécsre és a Hegyhátra.">
+<link rel="canonical" href="https://hegyhatifinomsagok.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hegyháti Finomságok · Saját földből, saját kézből.">
+<meta property="og:description" content="Kézműves füstölt áruk, kolbászok, sonkák, szalámik egy pécsi kistermelő házaspártól. Rendeljen a webshopból, kiszállítás előrendeléssel péntek és szombat.">
+<meta property="og:image" content="https://hegyhatifinomsagok.com/media/stock/og-image.jpg">
+<meta property="og:url" content="https://hegyhatifinomsagok.com/">
+<meta property="og:locale" content="hu_HU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="256x256" href="media/favicon.png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<div class="amb" aria-hidden="true"><div class="amb__vig"></div></div>
+
+<!-- @nav -->
+<nav class="nav" aria-label="Fő navigáció">
+  <a href="index.html" class="nav__brand">
+    <img class="nav__logo" src="media/logo-hegyhati.webp" alt="" width="42" height="42">
+    <span><strong>Hegyháti</strong><small>Finomságok</small></span>
+  </a>
+  <div class="nav__links">
+    <a href="index.html" class="nav__link" aria-current="page">Főoldal</a>
+    <a href="termekek.html" class="nav__link">Termékek</a>
+    <a href="kiszallitas.html" class="nav__link">Kiszállítás / Előrendelés</a>
+    <a href="rolunk.html" class="nav__link">Történetünk</a>
+    <a href="kapcsolat.html" class="nav__link">Kapcsolat</a>
+  </div>
+  <div class="nav__cta">
+    <button class="cart-btn" id="cartBtn" aria-label="Kosár megnyitása">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1 1 0 0 1-1 1.1H5.8a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+      <span class="cart-btn__badge" id="cartBadge">0</span>
+    </button>
+    <button class="burger" aria-label="Menü" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+<!-- @/nav -->
+
+<!-- @mnav -->
+<div class="mnav">
+  <a href="index.html">Főoldal</a>
+  <a href="termekek.html">Termékek <small>35 finomság</small></a>
+  <a href="kiszallitas.html">Kiszállítás <small>előrendelés</small></a>
+  <a href="rolunk.html">Történetünk</a>
+  <a href="kapcsolat.html">Kapcsolat</a>
+  <div class="mnav__foot">
+    Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00<br>
+    <a href="tel:+36303007422">+36 30 300 7422</a>
+  </div>
+</div>
+<!-- @/mnav -->
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero__media">
+    <img src="media/stock/hero-makro.webp" alt="Kézműves hurka és kolbász a füstölő fényében" fetchpriority="high">
+  </div>
+  <div class="wrap">
+    <h1 class="hero__title">
+      <span class="line"><span>Saját földből,</span></span>
+      <span class="line"><span>saját kézből.</span></span>
+    </h1>
+    <p class="hero__sub">Amit nálunk vesz, azt mi neveltük, mi termesztettük hozzá a takarmányt, és mi füstöltük, úgy, ahogy a nagyszüleinktől tanultuk.</p>
+    <div class="hero__badges">
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>Pécsi Vásárcsarnok · Zólyom utca 4.</span>
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>Kedd-péntek 6:00-14:00 · Szombat 6:00-12:00</span>
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>Kiszállítás előrendeléssel, péntek és szombat</span>
+    </div>
+    <div class="hero__cta">
+      <a href="termekek.html" class="btn btn--solid" data-magnet>Termékeink
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="rolunk.html" class="btn btn--ghost" data-magnet>A történetünk</a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</header>
+
+<!-- ============ MINDENT MI MAGUNK (lip elválasztó) ============ -->
+<section class="lip" id="mi-magunk">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Miért más ez a hús</p>
+    <h2 data-reveal style="font-size:var(--step-3);max-width:20ch;margin-top:1.1rem">Nem futószalagról. A mi portánkról.</h2>
+    <p class="lead" data-words style="margin-top:1.6rem;max-width:62ch">Az állatot mi neveljük, a takarmányt mi termesztjük hozzá, a receptet a családtól örököltük. A bolti, nagyüzemi hústól ez választ el minket: nálunk a teljes út egy kézben van, az óltól a füstölőig.</p>
+
+    <div class="vrows" style="margin-top:3.4rem">
+      <div class="vrow" data-reveal>
+        <span class="vrow__idx">01</span>
+        <h3 class="vrow__title">Tenyésztés</h3>
+        <p class="vrow__desc">Sertést, mangalicát és marhát tartunk, a saját portánkon. Ismerjük mindegyiket, és ez az ízén is érződik.</p>
+      </div>
+      <div class="vrow" data-reveal>
+        <span class="vrow__idx">02</span>
+        <h3 class="vrow__title">Termesztés</h3>
+        <p class="vrow__desc">A takarmány és a fűszernövény is a mi földünkből nő ki. Nem veszünk zsákbamacskát, se az állatnak, se Önnek.</p>
+      </div>
+      <div class="vrow" data-reveal>
+        <span class="vrow__idx">03</span>
+        <h3 class="vrow__title">Feldolgozás</h3>
+        <p class="vrow__desc">Családi receptek, kézi munka, bükkfa-füst és türelem. Hurka, kolbász, sonka. Úgy, ahogy a disznótorokon tanultuk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KIEMELT TERMÉKEK ============ -->
+<section id="kiemelt">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>A pult büszkeségei</p>
+    <h2 data-reveal style="font-size:var(--step-3);margin-top:1.1rem">Kóstolja meg először ezeket</h2>
+    <div class="pgrid" style="margin-top:2.6rem" id="featGrid"></div>
+    <p style="margin-top:1.6rem;color:var(--muted);font-size:.9rem">Minden ár tájékoztató jellegű, a pontos végösszeg a mérés után derül ki. <a href="termekek.html" style="color:var(--accent-soft);text-decoration:underline;text-underline-offset:3px">Teljes kínálat, keresővel és szűrőkkel →</a></p>
+  </div>
+</section>
+
+<!-- ============ HOGYAN KÉSZÜL (sticky galéria, saját fotókkal) ============ -->
+<section class="lip" id="hogyan">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>A műhelyből</p>
+    <h2 data-reveal style="font-size:var(--step-3);margin-top:1.1rem;max-width:16ch">Így készül nálunk</h2>
+    <div class="how" style="margin-top:3rem">
+      <div class="how__media">
+        <img src="media/photos/kamra.webp" alt="Füstölt sonkák a füstölőkamrában" loading="lazy">
+        <img src="media/photos/erlelo.webp" alt="Érlelődő kolbászok és szalámik a szárítóban" loading="lazy">
+        <img src="media/photos/vakuum.webp" alt="Gondosan csomagolt kész termékek" loading="lazy">
+      </div>
+      <div class="how__steps">
+        <div class="how__step">
+          <img class="how__step-img" src="media/photos/kamra.webp" alt="Füstölt sonkák a füstölőkamrában" loading="lazy">
+          <p class="eyebrow">1 · Füst</p>
+          <h3>Bükkfán, lassan</h3>
+          <p>A füstölőkamránkban nem sietünk. A sonka, a szalonna és a kolbász annyi időt kap, amennyi kell. A füst nem íz-spray, hanem türelem kérdése. Ez a fotó nem díszlet: ez a mi kamránk.</p>
+        </div>
+        <div class="how__step">
+          <img class="how__step-img" src="media/photos/erlelo.webp" alt="Érlelődő kolbászok és szalámik a szárítóban" loading="lazy">
+          <p class="eyebrow">2 · Érlelés</p>
+          <h3>Az idő a legjobb fűszer</h3>
+          <p>Az érlelőnkben rudakon sorakozik a stifolder és a szalámi, kézzel írt cetlikkel. Nincs gyorsítás, nincs adalék-trükk, csak hűvös levegő, huzat és hetek.</p>
+        </div>
+        <div class="how__step">
+          <img class="how__step-img" src="media/photos/vakuum.webp" alt="Gondosan csomagolt kész termékek" loading="lazy">
+          <p class="eyebrow">3 · Kézből kézbe</p>
+          <h3>Frissen, gondosan</h3>
+          <p>Amit megrendel, azt mi mérjük, mi csomagoljuk, és vagy a pultnál adjuk át, vagy házhoz visszük. Rövid az út, ezért friss, ami az asztalára kerül.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MALACOS MINI-SZTORI ============ -->
+<section id="sztori">
+  <div class="wrap">
+    <div class="split">
+      <figure class="split__media split__media--wide" data-slide="left">
+        <img src="media/photos/malacok.webp" alt="Koca kismalacokkal a hegyháti portán" loading="lazy">
+      </figure>
+      <div data-reveal>
+        <p class="eyebrow">Ahol minden kezdődik</p>
+        <h2 style="font-size:var(--step-3);max-width:14ch;margin-top:1rem">Az élet nálunk az ólban kezdődik</h2>
+        <p style="margin-top:1.2rem;color:var(--muted);max-width:46ch">Ez a kép a mi portánkon készült. Minden termékünk útja itt indul. Gondoskodással, szalmán, nyugalomban. Egy idősebb pécsi házaspár vagyunk, akiknek a jószág nem tétel a leltárban, hanem a mindennapok része.</p>
+        <a href="rolunk.html" class="btn btn--ghost" style="margin-top:1.8rem" data-magnet>Ismerje meg a történetünket</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true"><div class="marquee__inner">
+  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Pácolt hús <em>·</em> Tepertő <em>·</em> Májas <em>·</em> Kulen <em>·</em> </span>
+  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Pácolt hús <em>·</em> Tepertő <em>·</em> Májas <em>·</em> Kulen <em>·</em> </span>
+</div></div>
+
+<!-- ============ KISZÁLLÍTÁS ELŐRENDELÉSSEL (teaser) ============ -->
+<section class="lip" id="kiszallitas">
+  <div class="wrap">
+    <div class="split" style="align-items:start">
+      <div data-reveal>
+        <p class="eyebrow">Kiszállítás előrendeléssel</p>
+        <h2 style="font-size:var(--step-3);max-width:14ch;margin-top:1rem">Házhoz visszük, ha előre szól</h2>
+        <p style="margin-top:1.2rem;color:var(--muted);max-width:48ch">Minden hónap első hetében és a hónap közepén kiszállítunk: <strong style="color:var(--ink)">pénteken</strong> a hegyháti falvakba (Komló, Mánfa, Mecsekjánosi és a többiek), <strong style="color:var(--ink)">szombaton</strong> Pécsre, Kozármislenybe, Abaligetre és Orfűre.</p>
+        <p style="margin-top:1rem;color:var(--muted);max-width:48ch">Rendeljen a webshopból vagy telefonon, mi pedig hűtve, frissen hozzuk. A pontos időpontot telefonon egyeztetjük.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.8rem">
+          <a href="kiszallitas.html" class="btn btn--solid" data-magnet>Települések és napok</a>
+          <a href="tel:+36303007422" class="btn btn--ghost num-tab" data-magnet>+36 30 300 7422</a>
+        </div>
+      </div>
+      <figure class="poster" data-reveal data-delay="1">
+        <img src="media/photos/kiszallitas-plakat.webp" alt="Kiszállítás előrendeléssel: péntek Mánfa, Komló, Mecsekfalu, Mecsekjánosi, Mecsekpölöske, Oroszló, Mindszentgodisa, Kisbeszterce, Bakóca; szombat Pécs, Kozármisleny, Abaliget, Orfű" loading="lazy" width="1000" height="1000">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NYITVATARTÁS ============ -->
+<section class="hours" id="nyitvatartas">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Az üzletünk</p>
+    <h2 class="hours__big" data-reveal style="margin-top:1.1rem"><em>Keddtől péntekig</em> 6:00-14:00, <em>szombaton</em> 6:00-12:00.</h2>
+    <p class="lead" data-reveal style="margin-top:1.4rem">Vasárnap és hétfőn zárva tartunk, ilyenkor a portán dolgozunk. A hét többi napján friss hurka, kolbász és minden más várja a pultnál. Vagy rendeljen a webshopból: pénteken a Hegyhátra, szombaton Pécsre és környékére visszük, előrendeléssel.</p>
+    <div class="hours__meta" data-reveal>
+      <div><strong>Cím</strong>Pécsi Vásárcsarnok, Pécs, Zólyom utca 4.</div>
+      <div><strong>Telefon</strong><a href="tel:+36303007422" class="num-tab">+36 30 300 7422</a></div>
+      <div><strong>Útvonal</strong><a href="https://www.google.com/maps/search/?api=1&query=P%C3%A9cs%2C+Z%C3%B3lyom+utca+4." target="_blank" rel="noopener">Megnyitás térképen ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<!-- @footer full cta -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__cta">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2.4rem;justify-content:space-between">
+        <h2 data-reveal>Kóstolja meg, amit mi magunk készítünk.</h2>
+        <a href="termekek.html" class="btn btn--solid" data-magnet>Rendelek
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brandline">
+          <div class="stamp"><img src="media/logo-hegyhati.webp" alt="Hegyháti Finomságok logó" width="118" height="118"></div>
+          <div>
+            <strong style="font-family:var(--font-display);font-size:1.25rem">Hegyháti Finomságok</strong>
+            <p style="margin-top:.3rem">Saját földből, saját kézből.</p>
+          </div>
+        </div>
+        <p style="margin-top:1.4rem;max-width:34ch">Kistermelői kézműves húsáruk Pécsről, saját tenyésztésű állatokból, hagyományos családi receptek szerint.</p>
+      </div>
+      <div>
+        <h4>Termékek</h4>
+        <a href="sonka.html">Sonka</a>
+        <a href="szalonna.html">Szalonna</a>
+        <a href="kolbasz.html">Kolbász</a>
+        <a href="szalami.html">Szalámi</a>
+        <a href="pacolt-hus.html">Pácolt hús</a>
+        <a href="teperto.html">Tepertő</a>
+        <a href="majas.html">Májas</a>
+        <a href="termekek.html">Teljes kínálat</a>
+      </div>
+      <div>
+        <h4>Információ</h4>
+        <a href="kiszallitas.html">Kiszállítás / Előrendelés</a>
+        <a href="szallitas.html">Szállítás és átvétel</a>
+        <a href="rolunk.html">Történetünk</a>
+        <a href="kapcsolat.html">Kapcsolat</a>
+        <a href="aszf.html">ÁSZF</a>
+        <a href="adatkezeles.html">Adatkezelés</a>
+        <a href="impresszum.html">Impresszum</a>
+        <a href="elallas.html">Elállási tájékoztató</a>
+      </div>
+      <div>
+        <h4>Elérhetőség</h4>
+        <p>Pécsi Vásárcsarnok</p>
+        <p>Pécs, Zólyom utca 4.</p>
+        <p>Kedd-péntek 6:00-14:00 · Szombat 6:00-12:00</p>
+        <a href="tel:+36303007422" class="num-tab">+36 30 300 7422</a>
+        <a href="mailto:hegyhatihus@gmail.com">hegyhatihus@gmail.com</a>
+        <a href="https://www.facebook.com/hegyhatifinomsagok" target="_blank" rel="noopener">Facebook ↗</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Hegyháti Finomságok · Pécs</span>
+      <span>Kistermelői húsáruk a Pécsi Vásárcsarnokból. Minden ár tájékoztató jellegű.</span>
+    </div>
+  </div>
+</footer>
+<!-- @/footer -->
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/data/products.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shop/cart.js"></script>
+<script src="js/shop/cart-drawer.js"></script>
+<script src="js/shop/catalog.js"></script>
+<script>
+/* kiemelt termékek a katalógusból (featured: true) */
+(function () {
+  const g = document.getElementById('featGrid');
+  if (!g || !window.HFCAT) return;
+  const feat = HFDATA.PRODUCTS.filter(p => p.featured).slice(0, 5);
+  g.innerHTML = feat.map((p, i) => HFCAT.card(p).replace('data-reveal', 'data-reveal data-delay="' + (i % 3) + '"')).join('') +
+    '<article class="pcard pcard--all" data-reveal data-delay="2" style="justify-content:center;align-items:flex-start;padding:2rem;background:transparent;border-style:dashed">' +
+      '<h3 class="pcard__name" style="font-size:1.6rem;max-width:12ch">Még ' + (HFDATA.PRODUCTS.length - feat.length) + ' finomság várja</h3>' +
+      '<p class="pcard__desc" style="margin-top:.6rem">Sonkák, szalonnák, szalámik, pácolt húsok, tepertő és májas.</p>' +
+      '<a class="btn btn--sm" style="margin-top:1.4rem" href=' + JSON.stringify(HF.link('termekek.html')) + '>Teljes kínálat ' + HFCAT.ARROW + '</a>' +
+    '</article>';
+  HFCAT.bindQuickAdd(g);
+  dispatchEvent(new Event('scroll'));
+})();
+</script>
+</body>
+</html>

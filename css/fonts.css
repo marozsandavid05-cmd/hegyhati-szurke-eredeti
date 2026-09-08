@@ -1,0 +1,45 @@
+/* Hegyháti Finomságok, self-hosted fontok (Fontshare: Boska + General Sans)
+   ő/ű glyph-teszt: ÁTMENT (2026-07-18, headless render) */
+
+@font-face {
+  font-family: 'Boska';
+  src: url('../fonts/boska-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Boska';
+  src: url('../fonts/boska-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Boska';
+  src: url('../fonts/boska-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('../fonts/general-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('../fonts/general-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('../fonts/general-sans-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}

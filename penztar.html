@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+<title>Pénztár · Hegyháti Finomságok</title>
+<meta name="description" content="Rendelés leadása, átvétel az üzletben vagy kiszállítás előrendeléssel péntek és szombat.">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" type="image/png" sizes="256x256" href="media/favicon.png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<div class="amb" aria-hidden="true"><div class="amb__vig"></div></div>
+
+<!-- @nav -->
+<nav class="nav" aria-label="Fő navigáció">
+  <a href="index.html" class="nav__brand">
+    <img class="nav__logo" src="media/logo-hegyhati.webp" alt="" width="42" height="42">
+    <span><strong>Hegyháti</strong><small>Finomságok</small></span>
+  </a>
+  <div class="nav__links">
+    <a href="index.html" class="nav__link">Főoldal</a>
+    <a href="termekek.html" class="nav__link">Termékek</a>
+    <a href="kiszallitas.html" class="nav__link">Kiszállítás / Előrendelés</a>
+    <a href="rolunk.html" class="nav__link">Történetünk</a>
+    <a href="kapcsolat.html" class="nav__link">Kapcsolat</a>
+  </div>
+  <div class="nav__cta">
+    <button class="cart-btn" id="cartBtn" aria-label="Kosár megnyitása">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1 1 0 0 1-1 1.1H5.8a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+      <span class="cart-btn__badge" id="cartBadge">0</span>
+    </button>
+    <button class="burger" aria-label="Menü" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+<!-- @/nav -->
+
+<!-- @mnav -->
+<div class="mnav">
+  <a href="index.html">Főoldal</a>
+  <a href="termekek.html">Termékek <small>35 finomság</small></a>
+  <a href="kiszallitas.html">Kiszállítás <small>előrendelés</small></a>
+  <a href="rolunk.html">Történetünk</a>
+  <a href="kapcsolat.html">Kapcsolat</a>
+  <div class="mnav__foot">
+    Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00<br>
+    <a href="tel:+36303007422">+36 30 300 7422</a>
+  </div>
+</div>
+<!-- @/mnav -->
+
+<main class="wrap" style="padding-top:8.6rem;padding-bottom:5rem">
+  <p class="eyebrow">Pénztár</p>
+  <h1 style="font-size:var(--step-3);margin-top:1rem">Rendelés leadása</h1>
+
+  <div id="coEmpty" style="display:none;padding:3.4rem 0">
+    <p style="color:var(--muted);font-size:var(--step-1)">A kosara üres, válogasson a finomságaink közül.</p>
+    <a href="termekek.html" class="btn btn--solid" style="margin-top:1.6rem">Termékek böngészése</a>
+  </div>
+
+  <form class="co-grid" id="coForm" style="margin-top:2.4rem" novalidate>
+    <div>
+      <!-- 1 · Rendelés áttekintése -->
+      <section class="co-block">
+        <h2><span class="n">1</span>Rendelés áttekintése</h2>
+        <div class="co-items" id="coItems" data-lenis-prevent></div>
+        <div class="sum-note">Minden ár tájékoztató jellegű, a feltüntetett összeg becslés. Mérlegelt árut adunk. A pontos végösszeg a mérés után, átvételkor derül ki, telefonon egyeztetjük.</div>
+      </section>
+
+      <!-- 2 · Átvétel -->
+      <section class="co-block">
+        <h2><span class="n">2</span>Átvétel</h2>
+        <div class="pick-cards">
+          <label class="pick">
+            <input type="radio" name="fulfill" value="pickup" checked>
+            <span class="pick__body">
+              <span class="pick__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1-4h14l1 4M4 9v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9M4 9h16M9 14h6"/></svg>
+                Átvétel az üzletben
+                <span class="pick__fee">ingyenes</span>
+              </span>
+              <span class="pick__desc">Pécsi Vásárcsarnok, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00</span>
+            </span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="fulfill" value="delivery">
+            <span class="pick__body">
+              <span class="pick__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>
+                Kiszállítás előrendeléssel
+                <span class="pick__fee" id="delFeeTag"></span>
+              </span>
+              <span class="pick__desc">Péntek: Hegyhát · Szombat: Pécs és környéke · hűtve, a hónap első hetében és közepén</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Átvételi nap (bolti átvétel) -->
+        <div class="co-sub on" id="pickupSub">
+          <div class="fld">
+            <label for="pickupDay">Melyik napon jönne?</label>
+            <select id="pickupDay">
+              <option value="kedd">Kedd (6:00-14:00)</option>
+              <option value="szerda">Szerda (6:00-14:00)</option>
+              <option value="csutortok">Csütörtök (6:00-14:00)</option>
+              <option value="pentek">Péntek (6:00-14:00)</option>
+              <option value="szombat">Szombat (6:00-12:00)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Szállítási adatok -->
+        <div class="co-sub" id="deliverySub">
+          <div class="fld" style="margin-bottom:1.05rem">
+            <label for="town">Település <b>*</b></label>
+            <select id="town"></select>
+            <span class="hint" id="routeInfo"></span>
+            <span class="err-msg">Válassza ki a települést a listából.</span>
+          </div>
+          <div class="fgrid">
+            <div class="fld">
+              <label for="zip">Irányítószám <b>*</b></label>
+              <input id="zip" inputmode="numeric" autocomplete="postal-code" maxlength="4" placeholder="7622">
+              <span class="err-msg">Adja meg az irányítószámot.</span>
+            </div>
+            <div class="fld">
+              <label for="street">Utca, házszám <b>*</b></label>
+              <input id="street" autocomplete="street-address" placeholder="Példa utca 12.">
+              <span class="err-msg">Adja meg az utcát és házszámot.</span>
+            </div>
+          </div>
+          <p class="hint" id="minOrderHint" style="color:var(--muted);font-size:.82rem;margin-top:.8rem"></p>
+        </div>
+      </section>
+
+      <!-- 3 · Kapcsolattartás -->
+      <section class="co-block">
+        <h2><span class="n">3</span>Kapcsolattartás</h2>
+        <div class="fgrid">
+          <div class="fld">
+            <label for="cname">Név <b>*</b></label>
+            <input id="cname" autocomplete="name" placeholder="Kovács Anna">
+            <span class="err-msg">Adja meg a nevét.</span>
+          </div>
+          <div class="fld">
+            <label for="cphone">Telefonszám <b>*</b></label>
+            <input id="cphone" inputmode="tel" autocomplete="tel" placeholder="+36 30 123 4567">
+            <span class="hint">A pontos súly és végösszeg egyeztetéséhez visszahívjuk.</span>
+            <span class="err-msg">Adjon meg érvényes magyar telefonszámot.</span>
+          </div>
+          <div class="fld full">
+            <label for="cemail">E-mail <span style="opacity:.65">(nem kötelező)</span></label>
+            <input id="cemail" type="email" autocomplete="email" placeholder="kovacs.anna@gmail.com">
+            <span class="err-msg">Az e-mail cím formátuma hibás.</span>
+          </div>
+          <div class="fld full">
+            <label for="cnote">Megjegyzés a rendeléshez <span style="opacity:.65">(nem kötelező)</span></label>
+            <textarea id="cnote" maxlength="400" placeholder="Pl. kapucsengő, érkezési időablak…"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 · Fizetés -->
+      <section class="co-block">
+        <h2><span class="n">4</span>Fizetés</h2>
+        <div class="pick-cards">
+          <label class="pick">
+            <input type="radio" name="paym" value="cod" checked>
+            <span class="pick__body">
+              <span class="pick__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18M7 15h3"/></svg>
+                Fizetés átvételkor
+              </span>
+              <span class="pick__desc">Készpénzzel vagy kártyával az üzletben, illetve kiszállításkor.</span>
+            </span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="paym" value="card">
+            <span class="pick__body">
+              <span class="pick__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15.5h4"/></svg>
+                Online bankkártya
+                <span class="pick__fee" id="cardDemoTag">DEMÓ</span>
+              </span>
+              <span class="pick__desc" id="cardDesc">Biztonságos online fizetés, jelenleg bemutató módban, valódi terhelés nem történik.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- Összegzés (sticky) -->
+    <aside class="co-summary">
+      <section class="co-block">
+        <h2 style="font-size:1.35rem">Összegzés</h2>
+        <div class="sum-rows" id="sumRows"></div>
+        <div class="sum-note">Tájékoztató árak, becsült összeg, mérés után pontosítjuk.</div>
+        <div class="co-legal">
+          <label class="check-line">
+            <input type="checkbox" id="accTerms">
+            <span>Elfogadom az <a href="aszf.html" target="_blank">ÁSZF-et</a> és az <a href="adatkezeles.html" target="_blank">adatkezelési tájékoztatót</a>. <b style="color:var(--accent-soft)">*</b></span>
+          </label>
+          <label class="check-line">
+            <input type="checkbox" id="accMeasure">
+            <span>Tudomásul veszem, hogy az árak tájékoztató jellegűek, és mérlegelt áru miatt a végösszeg a mérés után pontosodik. <b style="color:var(--accent-soft)">*</b></span>
+          </label>
+          <p class="err-msg" id="legalErr" style="display:none;color:#E08379;font-size:.83rem">A rendeléshez mindkét jelölő elfogadása szükséges.</p>
+        </div>
+        <button class="btn btn--solid" type="submit" id="submitBtn">Megrendelés elküldése</button>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.9rem;text-align:center" id="demoLine">Az online bankkártyás fizetés bemutató módban fut, a rendelést telefonon erősítjük meg.</p>
+      </section>
+    </aside>
+  </form>
+</main>
+
+<!-- @footer mini -->
+<footer class="footer" style="margin-top:0">
+  <div class="wrap">
+    <div class="footer__bottom" style="border-top:0">
+      <span>© 2026 Hegyháti Finomságok · Pécs</span>
+      <span><a href="kapcsolat.html" style="color:var(--accent-soft)">Kapcsolat</a> · <a href="tel:+36303007422" style="color:var(--accent-soft)" class="num-tab">+36 30 300 7422</a></span>
+    </div>
+  </div>
+</footer>
+<!-- @/footer -->
+
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/data/products.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shop/cart.js"></script>
+<script src="js/shop/cart-drawer.js"></script>
+<script src="js/shop/catalog.js"></script>
+<script src="js/shop/order.js"></script>
+<script src="js/shop/payment.js"></script>
+<script src="js/shop/checkout.js"></script>
+</body>
+</html>

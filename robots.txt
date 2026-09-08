@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /penztar.html
+Disallow: /fizetes-demo.html
+Disallow: /koszonjuk.html
+
+Sitemap: https://hegyhatifinomsagok.com/sitemap.xml

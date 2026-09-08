@@ -1,0 +1,329 @@
+/* ==========================================================================
+   HEGYHÁTI FINOMSÁGOK, „Füstház" design-rendszer, WEBOLDAL 2: az EREDETI faszén + borostyán paletta,
+   az ÚJ logóval (David 2026-09-08 kérése, összehasonlításhoz a zöld-olíva verzió mellett).
+   Robusztus gerinc: a kritikus vizuál CSS/IO-alapú, gsap csak extra.
+   ========================================================================== */
+
+/* ============ TOKENEK (Füstház) ============ */
+:root{
+  --base:#121316;            /* faszén alap */
+  --surface:#1C1E22;         /* emelt felület */
+  --surface-2:#24262B;       /* kártya-hover, mélyebb felület */
+  --ink:#EBE8E2;             /* törtfehér szöveg */
+  --muted:#9BA0A6;           /* halvány szöveg (kontraszt-emelt) */
+  --accent:#D99838;          /* borostyán */
+  --accent-soft:#E8B96A;     /* világosabb borostyán (szöveghez sötéten) */
+  --paper:#EFE7DA;           /* krém „hentespapír”, világos chip */
+  --paper-ink:#211D18;       /* sötét szöveg a paper felületen */
+  --line:rgba(235,232,226,.13);
+  --font-display:'Boska',Georgia,serif;
+  --font-body:'General Sans',system-ui,sans-serif;
+  --step--1:.875rem;
+  --step-0:1rem;
+  --step-1:1.19rem;
+  --step-2:clamp(1.5rem,2.6vw,2rem);
+  --step-3:clamp(2rem,4.6vw,3.3rem);
+  --step-4:clamp(2.6rem,6.5vw,4.6rem);
+  --step-5:clamp(3.1rem,9vw,7.2rem);
+  --pad:clamp(1.25rem,5vw,5.5rem);
+  --maxw:1360px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --r-card:14px;
+  --r-lip:26px;
+}
+
+/* ============ RESET + ALAP ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:auto;overflow-x:clip}
+body{background:var(--base);color:var(--ink);font-family:var(--font-body);font-size:var(--step-0);line-height:1.65;overflow-x:clip}
+/* Lenis hivatalos CSS (kötelező) */
+html.lenis,html.lenis body{height:auto}
+.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-smooth iframe{pointer-events:none}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;line-height:1.02;letter-spacing:.005em;text-wrap:balance}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--accent);color:#121316}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+section{position:relative;padding-block:clamp(4rem,11vh,9rem)}
+.eyebrow{display:flex;align-items:center;gap:.8rem;font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:'';width:34px;height:1px;background:var(--accent);opacity:.7}
+.lead{color:var(--muted);font-size:var(--step-1);max-width:56ch}
+.num-tab{font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============ ATMOSZFÉRA-RÉTEG (amb), body-szintű, z:-1, sose tiszta fekete ============ */
+.amb{position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--base)}
+.amb::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(58% 44% at 82% -6%, rgba(217,152,56,.13), transparent 62%),
+    radial-gradient(46% 40% at -8% 22%, rgba(140,90,40,.10), transparent 60%),
+    radial-gradient(52% 46% at 108% 88%, rgba(90,54,24,.10), transparent 62%);}
+.amb::after{content:'';position:absolute;inset:0;background:url('../media/grain.png') repeat;background-size:220px;opacity:.05;mix-blend-mode:overlay}
+.amb__vig{position:absolute;inset:0;box-shadow:inset 0 0 22vmax rgba(0,0,0,.38)}
+
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:220;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.95rem var(--pad);transition:transform .45s var(--ease),background .3s ease,box-shadow .3s ease}
+.nav--scrolled{background:rgba(18,19,22,.96);box-shadow:0 1px 0 var(--line)}
+.nav--hidden{transform:translateY(-130%)}
+.nav__brand{display:flex;align-items:center;gap:.75rem;line-height:1.04}
+.nav__logo{width:42px;height:42px;border-radius:9px;object-fit:cover;flex:0 0 auto;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.nav__brand>span{display:flex;flex-direction:column}
+.nav__brand strong{font-family:var(--font-display);font-weight:700;font-size:1.34rem;letter-spacing:.01em}
+.nav__brand small{font-size:.62rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--accent)}
+.nav__links{display:flex;gap:1.9rem;align-items:center}
+.nav__link{position:relative;font-size:.94rem;font-weight:500;color:var(--muted);transition:color .25s}
+.nav__link:hover,.nav__link[aria-current="page"]{color:var(--ink)}
+.nav__link::after{content:'';position:absolute;left:0;bottom:-6px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav__link:hover::after,.nav__link[aria-current="page"]::after{transform:scaleX(1)}
+.nav__cta{display:flex;align-items:center;gap:.9rem}
+.cart-btn{position:relative;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;transition:border-color .3s,background .3s}
+.cart-btn:hover{border-color:var(--accent);background:rgba(217,152,56,.08)}
+.cart-btn svg{width:20px;height:20px;stroke:var(--ink)}
+.cart-btn__badge{position:absolute;top:-4px;right:-4px;min-width:19px;height:19px;padding:0 5px;display:grid;place-items:center;background:var(--accent);color:#16130D;font-size:.68rem;font-weight:600;border-radius:100px;opacity:0;transform:scale(.5);transition:opacity .25s,transform .35s var(--ease)}
+.cart-btn__badge.on{opacity:1;transform:scale(1)}
+.cart-btn__badge.bump{animation:bump .45s var(--ease)}
+@keyframes bump{40%{transform:scale(1.35)}}
+.burger{display:none;width:44px;height:44px;place-items:center;border:1px solid var(--line);border-radius:50%}
+.burger span{position:relative;display:block;width:18px;height:2px;background:var(--ink);transition:background .2s}
+.burger span::before,.burger span::after{content:'';position:absolute;left:0;width:100%;height:2px;background:var(--ink);transition:transform .3s var(--ease),top .3s}
+.burger span::before{top:-6px}
+.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}
+.menu-open .burger span::before{top:0;transform:rotate(45deg)}
+.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
+@media(max-width:900px){
+  .nav__links{display:none}
+  .burger{display:grid}
+}
+/* Mobil menü-overlay */
+.mnav{position:fixed;inset:0;z-index:210;background:rgba(18,19,22,.97);display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);
+  opacity:0;visibility:hidden;transition:opacity .4s ease,visibility 0s .4s}
+.menu-open .mnav{opacity:1;visibility:visible;transition:opacity .4s ease}
+.mnav a{font-family:var(--font-display);font-size:clamp(2rem,9vw,3.2rem);font-weight:700;padding:.45rem 0;color:var(--ink);opacity:.92}
+.mnav a small{display:inline-block;margin-left:.9rem;font-family:var(--font-body);font-size:.8rem;color:var(--accent);letter-spacing:.2em}
+.mnav__foot{margin-top:2.4rem;color:var(--muted);font-size:.9rem;line-height:1.9}
+
+/* ============ HERO (index), ken-burns + spotlight + grain, CSS-alap ============ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;padding-bottom:7vh;overflow:clip}
+.hero__media{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.hero__media img{width:100%;height:100%;object-fit:cover;transform-origin:62% 40%}
+.js .hero__media img{animation:kenburns 34s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.12) translate(-1.6%,1.2%)}}
+.hero__media::before{content:'';position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(70% 58% at 70% 30%, rgba(217,152,56,.14), transparent 64%),
+    linear-gradient(180deg, rgba(18,19,22,.62) 0%, rgba(18,19,22,.28) 34%, rgba(18,19,22,.55) 68%, var(--base) 97%);}
+.hero__media::after{content:'';position:absolute;inset:0;z-index:2;background:url('../media/grain.png') repeat;background-size:200px;opacity:.07;mix-blend-mode:overlay}
+.hero__title{font-size:var(--step-5);max-width:12ch}
+.hero__title .line{display:block;overflow:hidden}
+.hero__title .line>span{display:block}
+.js .hero__title .line>span{transform:translateY(112%)}
+.js .hero.is-in .line>span{transform:translateY(0);transition:transform 1.05s var(--ease)}
+.js .hero.is-in .line:nth-child(2)>span{transition-delay:.12s}
+.hero__sub{margin-top:1.4rem;max-width:52ch;color:#C9C4BB;font-size:var(--step-1)}
+.hero__badges{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.9rem}
+.badge{display:inline-flex;align-items:center;gap:.55rem;padding:.5rem 1rem;border:1px solid var(--line);border-radius:100px;font-size:.85rem;color:#C9C4BB;background:rgba(18,19,22,.62)}
+.badge svg{width:15px;height:15px;stroke:var(--accent)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.2rem}
+.js .hero__sub,.js .hero__badges,.js .hero__cta{opacity:0;transform:translateY(26px)}
+.js .hero.is-in .hero__sub,.js .hero.is-in .hero__badges,.js .hero.is-in .hero__cta{opacity:1;transform:none;transition:opacity .9s ease .35s,transform .9s var(--ease) .35s}
+.scroll-hint{position:absolute;bottom:2.2rem;right:var(--pad);width:1px;height:52px;background:linear-gradient(rgba(235,232,226,.5),transparent);overflow:hidden}
+.scroll-hint::after{content:'';position:absolute;top:-50%;left:0;width:100%;height:50%;background:var(--accent);animation:drop 1.9s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes drop{to{top:110%}}
+
+/* ============ GOMBOK ============ */
+.btn{display:inline-flex;align-items:center;gap:.7rem;position:relative;overflow:hidden;padding:1.02rem 2.1rem;border:1px solid rgba(217,152,56,.55);border-radius:100px;z-index:0;font-weight:600;font-size:.98rem;color:var(--ink);transition:color .35s,border-color .35s}
+.btn::before{content:'';position:absolute;inset:0;background:var(--accent);transform:translateY(102%);transition:transform .45s cubic-bezier(.7,0,.2,1);z-index:-1}
+.btn:hover{color:#16130D;border-color:var(--accent)}
+.btn:hover::before{transform:translateY(0)}
+.btn svg{width:17px;height:17px}
+.btn--solid{background:var(--accent);border-color:var(--accent);color:#16130D}
+.btn--solid::before{background:var(--ink)}
+.btn--solid:hover{color:#121316}
+.btn--ghost{border-color:var(--line);color:var(--muted)}
+.btn--ghost:hover{color:#16130D}
+.btn--sm{padding:.68rem 1.35rem;font-size:.88rem}
+.btn[disabled],.btn.is-disabled{opacity:.45;pointer-events:none}
+
+/* ============ REVEAL (RB2) ============ */
+.js [data-reveal]{opacity:0;transform:translateY(38px);will-change:transform,opacity}
+.js [data-reveal].in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s var(--ease)}
+.js [data-reveal][data-delay="1"].in{transition-delay:.08s}
+.js [data-reveal][data-delay="2"].in{transition-delay:.16s}
+.js [data-reveal][data-delay="3"].in{transition-delay:.24s}
+
+/* ============ SZEKCIÓ-ELVÁLASZTÓK, opálos lip (SOHA szín-a-színbe) ============ */
+.lip{position:relative;z-index:2;background:var(--surface);border-radius:var(--r-lip) var(--r-lip) 0 0;margin-top:-5vh;
+  box-shadow:0 -28px 48px -22px rgba(0,0,0,.55)}
+.lip::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;border-radius:inherit;
+  background:linear-gradient(90deg, transparent 4%, rgba(217,152,56,.5) 28%, rgba(217,152,56,.14) 62%, transparent 96%)}
+/* kép-alfa-feketére elválasztó: a kép alja a base-be olvad */
+.img-fade{-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+
+/* ============ SPLIT layout ============ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4.5vw,4.5rem);align-items:center}
+.split+.split{margin-top:clamp(3.4rem,9vh,7.5rem)}
+.split__media{position:relative;aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;background:var(--surface)}
+.split__media img{width:100%;height:100%;object-fit:cover}
+.split__media--wide{aspect-ratio:16/11}
+.split [data-slide]{will-change:transform,opacity}
+@media(max-width:820px){.split{grid-template-columns:1fr}}
+
+/* ============ VALUE-SOROK (lista, nem kártya-grid) ============ */
+.vrows{border-top:1px solid var(--line)}
+.vrow{display:grid;grid-template-columns:auto 1fr 2fr;gap:clamp(1rem,4vw,3.5rem);align-items:baseline;padding:1.9rem 0;border-bottom:1px solid var(--line)}
+.vrow__idx{font-family:var(--font-display);font-size:1.05rem;color:var(--accent)}
+.vrow__title{font-family:var(--font-display);font-size:var(--step-2);font-weight:500}
+.vrow__desc{color:var(--muted);max-width:52ch}
+@media(max-width:700px){.vrow{grid-template-columns:auto 1fr}.vrow__desc{grid-column:2}}
+
+/* ============ MARQUEE ============ */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding-block:1.35rem}
+.marquee__inner{display:flex;gap:3rem;white-space:nowrap;width:max-content;animation:mq 30s linear infinite}
+.marquee__inner span{font-family:var(--font-display);font-weight:500;font-size:clamp(1.6rem,4.4vw,2.8rem);color:#5E6167}
+.marquee__inner span em{font-style:normal;color:var(--accent);padding:0 .5rem}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ PECSÉT (logó-embléma paper korongon) ============ */
+.stamp{display:grid;place-items:center;width:118px;height:118px;background:#242F23;border-radius:18px;box-shadow:0 8px 26px rgba(0,0,0,.4);overflow:hidden;flex:0 0 auto}
+.stamp img{width:100%;height:100%;object-fit:cover}
+
+/* ============ NYITVATARTÁS-BLOKK ============ */
+.hours{position:relative}
+.hours__big{font-size:var(--step-4);max-width:16ch}
+.hours__big em{font-style:normal;color:var(--accent)}
+.hours__meta{display:flex;flex-wrap:wrap;gap:2.2rem;margin-top:2.4rem;color:var(--muted)}
+.hours__meta strong{display:block;font-weight:600;color:var(--ink);margin-bottom:.25rem}
+.hours__meta a:hover{color:var(--accent-soft)}
+
+/* ============ STICKY „HOGYAN KÉSZÜL” GALÉRIA ============ */
+.how{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem)}
+.how__media{position:sticky;top:12vh;height:76vh;border-radius:var(--r-card);overflow:hidden;background:var(--surface)}
+.how__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+.how__media img.on{opacity:1}
+.how__steps{display:flex;flex-direction:column;gap:34vh;padding-block:12vh}
+.how__step h3{font-size:var(--step-2);margin-bottom:.9rem}
+.how__step p{color:var(--muted);max-width:44ch}
+.how__step .eyebrow{margin-bottom:1rem}
+.how__step-img{display:none}
+@media(max-width:820px){
+  .how{grid-template-columns:1fr;gap:0}
+  /* mobilon minden lépés a SAJÁT fotóját kapja (a sticky képváltás csak széles nézetben működik jól) */
+  .how__media{display:none}
+  .how__steps{gap:3.2rem;padding-block:0}
+  .how__step{display:flex;flex-direction:column}
+  .how__step-img{display:block;order:-1;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-card);margin-bottom:1.4rem;background:var(--surface)}
+  .how__step .eyebrow{margin-bottom:.7rem}
+  .how__step h3{margin-bottom:.6rem}
+  .how__step p{max-width:none}
+}
+
+/* ============ FOOTER ============ */
+.footer{position:relative;z-index:2;background:var(--surface);border-radius:var(--r-lip) var(--r-lip) 0 0;margin-top:-4vh;
+  box-shadow:0 -28px 48px -22px rgba(0,0,0,.55);padding-top:clamp(3.4rem,8vh,6rem)}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg, transparent 4%, rgba(217,152,56,.5) 30%, rgba(217,152,56,.14) 64%, transparent 96%)}
+.footer__cta{padding-bottom:clamp(3rem,7vh,5rem);border-bottom:1px solid var(--line)}
+.footer__cta h2{font-size:var(--step-3);max-width:18ch}
+.footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.4rem;padding-block:3.2rem}
+.footer__grid h4{font-family:var(--font-body);font-size:.8rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem}
+.footer__grid a,.footer__grid p{display:block;color:var(--muted);font-size:.95rem;padding:.22rem 0}
+.footer__grid a:hover{color:var(--ink)}
+.footer__bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding-block:1.6rem;border-top:1px solid var(--line);color:#6A6E74;font-size:.83rem}
+.footer__brandline{display:flex;align-items:center;gap:1.1rem}
+@media(max-width:900px){.footer__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.footer__grid{grid-template-columns:1fr}}
+
+/* ============ KOMPAKT AL-OLDAL HERO ============ */
+.phero{position:relative;min-height:58vh;display:flex;align-items:flex-end;padding-bottom:4.5rem;overflow:clip}
+.phero--tall{min-height:72vh}
+.phero__media{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.phero__media img{width:100%;height:100%;object-fit:cover}
+.phero__media::before{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg, rgba(18,19,22,.66) 0%, rgba(18,19,22,.30) 40%, rgba(18,19,22,.62) 74%, var(--base) 98%)}
+.phero__media::after{content:'';position:absolute;inset:0;z-index:2;background:url('../media/grain.png') repeat;background-size:200px;opacity:.06;mix-blend-mode:overlay}
+.phero h1{font-size:var(--step-4);max-width:14ch}
+.phero .eyebrow{margin-bottom:1.1rem}
+.phero .lead{margin-top:1.2rem;color:#C9C4BB}
+
+/* ============ IDŐVONAL ============ */
+.tline{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);margin-top:3rem}
+.tline__item{border-left:1px solid var(--line);padding-left:1.6rem;position:relative}
+.tline__item::before{content:'';position:absolute;left:-4px;top:.5rem;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.tline__date{font-family:var(--font-display);font-size:var(--step-2);color:var(--accent)}
+.tline__item p{color:var(--muted);margin-top:.5rem;max-width:38ch}
+@media(max-width:640px){.tline{grid-template-columns:1fr}}
+
+/* ============ BEFORE/AFTER slider (natív, gsap-mentes) ============ */
+.ba{position:relative;border-radius:var(--r-card);overflow:hidden;aspect-ratio:16/10;background:var(--surface);user-select:none;touch-action:none}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba__after{clip-path:inset(0 0 0 var(--ba-x,50%))}
+.ba__handle{position:absolute;top:0;bottom:0;left:var(--ba-x,50%);width:2px;background:var(--accent);pointer-events:none;z-index:3}
+.ba__handle::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;
+  background:var(--accent);box-shadow:0 4px 18px rgba(0,0,0,.45);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316130D' stroke-width='2.4'%3E%3Cpath d='M8 7l-5 5 5 5M16 7l5 5-5 5'/%3E%3C/svg%3E");
+  background-size:22px;background-position:center;background-repeat:no-repeat}
+.ba__range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;-webkit-appearance:none;appearance:none}
+.ba__tag{position:absolute;bottom:1rem;z-index:3;padding:.4rem .95rem;border-radius:100px;font-size:.8rem;font-weight:600;letter-spacing:.06em;background:rgba(18,19,22,.82)}
+.ba__tag--l{left:1rem}
+.ba__tag--r{right:1rem;color:var(--accent-soft)}
+
+/* ============ GYIK accordion (K8: grid 0fr→1fr) ============ */
+.faq{border-top:1px solid var(--line)}
+.faq__item{border-bottom:1px solid var(--line)}
+.faq__q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:1.4rem;text-align:left;padding:1.5rem 0;font-weight:600;font-size:var(--step-1)}
+.faq__q svg{flex:0 0 auto;width:19px;height:19px;stroke:var(--accent);transition:transform .4s var(--ease)}
+.faq__item.open .faq__q svg{transform:rotate(45deg)}
+.faq__a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.faq__item.open .faq__a{grid-template-rows:1fr}
+.faq__a>div{overflow:hidden;color:var(--muted);max-width:64ch}
+.faq__a p{padding-bottom:1.5rem}
+
+/* ============ JOGI (legal) layout ============ */
+.legal{max-width:820px;margin:0 auto;padding:9rem var(--pad) 5rem}
+.legal h1{font-size:var(--step-3);margin-bottom:.6rem}
+.legal h2{font-size:var(--step-2);margin:2.6rem 0 .9rem;font-weight:500}
+.legal p,.legal li{color:var(--muted);margin-bottom:.85rem}
+.legal ul,.legal ol{padding-left:1.3rem;margin-bottom:1rem}
+.legal strong{color:var(--ink)}
+.legal .lead-date{color:#6A6E74;font-size:.88rem;margin-bottom:2.4rem}
+.minta-badge{display:inline-flex;align-items:center;gap:.5rem;margin:1rem 0 2rem;padding:.55rem 1.05rem;border-radius:8px;
+  background:rgba(217,152,56,.14);border:1px solid rgba(217,152,56,.4);color:var(--accent-soft);font-size:.86rem;font-weight:500}
+.legal-note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin:1.4rem 0}
+.legal-note p{margin:0;color:var(--ink)}
+
+/* ============ REDUCED MOTION (kötelező) ============ */
+@media (prefers-reduced-motion:reduce){
+  .js .hero__media img{animation:none}
+  .js .hero__title .line>span{transform:none}
+  .js .hero__sub,.js .hero__badges,.js .hero__cta{opacity:1;transform:none}
+  .js [data-reveal]{opacity:1;transform:none}
+  .js [data-slide]{opacity:1;transform:none}
+  .marquee__inner{animation:none}
+  .scroll-hint::after{animation:none}
+  .cart-btn__badge.bump{animation:none}
+  *{scroll-behavior:auto !important}
+}
+
+/* ============ KISZÁLLÍTÁS / ELŐRENDELÉS (2026-09) ============ */
+.routes{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.6rem}
+@media(max-width:700px){.routes{grid-template-columns:1fr}}
+.route{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:clamp(1.4rem,3vw,2.2rem)}
+.route__day{display:inline-flex;align-items:center;gap:.6rem;padding:.45rem 1.1rem;border-radius:100px;background:var(--accent);color:#16130D;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.route ul{list-style:none;margin-top:1.4rem;display:grid;grid-template-columns:1fr 1fr;gap:.55rem 1.2rem}
+@media(max-width:420px){.route ul{grid-template-columns:1fr}}
+.route li{display:flex;align-items:center;gap:.6rem;font-size:1.02rem;color:var(--ink)}
+.route li svg{width:15px;height:15px;stroke:var(--accent);flex:0 0 auto}
+.route__fee{margin-top:1.3rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.cadence{display:flex;align-items:center;gap:1rem;margin-top:2rem;padding:1.3rem 1.6rem;border:1px solid rgba(217,152,56,.45);border-radius:14px;background:rgba(217,152,56,.08);font-family:var(--font-display);font-size:var(--step-1);color:var(--ink)}
+.cadence svg{width:26px;height:26px;stroke:var(--accent);flex:0 0 auto}
+.phone-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem 2.4rem;margin-top:2.6rem;padding:clamp(1.4rem,3vw,2.2rem);border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line)}
+.phone-cta__num{font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--ink);line-height:1;transition:color .25s}
+.phone-cta__num:hover{color:var(--accent-soft)}
+.poster{border-radius:var(--r-card);overflow:hidden;background:var(--surface);box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.poster img{width:100%;height:auto}
