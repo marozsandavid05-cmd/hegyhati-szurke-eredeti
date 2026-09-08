@@ -260,8 +260,8 @@ section{position:relative;padding-block:clamp(4rem,11vh,9rem)}
 @media(max-width:640px){.tline{grid-template-columns:1fr}}
 
 /* ============ BEFORE/AFTER slider (natív, gsap-mentes) ============ */
-/* előtte/utána: max 900px, hogy nagy kijelzőn se töltse ki a képernyőt (David 2026-09-08) */
-.ba{position:relative;width:100%;max-width:900px;border-radius:var(--r-card);overflow:hidden;aspect-ratio:16/10;background:var(--surface);user-select:none;touch-action:none}
+/* előtte/utána: max 1100px, középre, egyenlő tér két oldalt (David 2026-09-08) */
+.ba{position:relative;width:100%;max-width:1100px;margin-inline:auto;border-radius:var(--r-card);overflow:hidden;aspect-ratio:16/10;background:var(--surface);user-select:none;touch-action:none}
 .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .ba__after{clip-path:inset(0 0 0 var(--ba-x,50%))}
 .ba__handle{position:absolute;top:0;bottom:0;left:var(--ba-x,50%);width:2px;background:var(--accent);pointer-events:none;z-index:3}
