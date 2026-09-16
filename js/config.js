@@ -94,7 +94,10 @@ const IS_HTTP = /^https?:$/.test(location.protocol);
 function cleanUrl(href) {
   if (!IS_HTTP || !href) return href;
   if (/^(https?:|mailto:|tel:|#|\/\/)/.test(href)) return href;
-  return href.replace(/(^|\/)index\.html(?=$|[#?])/, '$1').replace(/\.html(?=$|[#?])/, '');
+  const out = href.replace(/(^|\/)index\.html(?=$|[#?])/, '$1').replace(/\.html(?=$|[#?])/, '');
+  /* "index.html" -> "" lenne, az üres href pedig az AKTUÁLIS oldalra mutat (a Főoldal link
+     visszadobott a kapcsolatra). Gyökér-index esetén "./" kell, ami http-n a "/"-re oldódik. */
+  return (out === '' || /^[#?]/.test(out)) ? './' + out : out;
 }
 function asset(path) { return HF_BASE + path; }
 function link(path) { return cleanUrl(HF_BASE + path); }
