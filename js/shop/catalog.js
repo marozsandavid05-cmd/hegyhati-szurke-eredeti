@@ -91,8 +91,14 @@
           '<button type="button" class="search__clear" id="shopSearchClear" aria-label="Keresés törlése" hidden>' + CLEAR_ICON + '</button>' +
         '</label>' +
         '<div class="filters" role="group" aria-label="Szűrés fajta szerint">' +
-          '<button type="button" class="fchip on" data-animal="">Mind</button>' +
-          animals.map(a => '<button type="button" class="fchip" data-animal="' + a.id + '">' + a.name + '</button>').join('') +
+          (o.animalLinks
+            /* link-mód: a fajta a tiszta URL-be kerül (/mangalica-szalonna), így megosztható és hirdethető */
+            ? '<a class="fchip' + (o.currentAnimal ? '' : ' on') + '" href="' + o.animalLinks[''] + '">Mind</a>' +
+              animals.map(a => o.animalLinks[a.id]
+                ? '<a class="fchip' + (o.currentAnimal === a.id ? ' on' : '') + '" href="' + o.animalLinks[a.id] + '"' + (o.currentAnimal === a.id ? ' aria-current="page"' : '') + '>' + a.name + '</a>'
+                : '').join('')
+            : '<button type="button" class="fchip on" data-animal="">Mind</button>' +
+              animals.map(a => '<button type="button" class="fchip" data-animal="' + a.id + '">' + a.name + '</button>').join('')) +
         '</div>' +
         '<span class="shop-tools__count" id="shopCount" aria-live="polite"></span>' +
       '</div>';
@@ -119,7 +125,7 @@
       const total = root.querySelectorAll('.pcard').length;
       cnt.textContent = (q || state.animal) ? (shown + ' / ' + total + ' termék') : (total + ' termék');
     }
-    if (o.onApply) o.onApply(shown);
+    if (o.onApply) o.onApply(shown, state);
     return shown;
   }
 
@@ -129,14 +135,15 @@
     const input = container.querySelector('#shopSearch');
     const clear = container.querySelector('#shopSearchClear');
     const chipsEl = [...container.querySelectorAll('.fchip')];
+    const linkMode = !!o.animalLinks;
     const state = { q: '', animal: '' };
-    /* ?q= és ?fajta= előtöltés (megosztható keresés) */
+    /* ?q= és ?fajta= előtöltés (megosztható keresés). Link-módban a fajta az URL útvonalában van. */
     try {
       const sp = new URLSearchParams(location.search);
       if (sp.get('q')) { state.q = sp.get('q'); input.value = state.q; }
-      if (sp.get('fajta') && HFDATA.getAnimal(sp.get('fajta'))) state.animal = sp.get('fajta');
+      if (!linkMode && sp.get('fajta') && HFDATA.getAnimal(sp.get('fajta'))) state.animal = sp.get('fajta');
     } catch (e) {}
-    chipsEl.forEach(c => c.classList.toggle('on', c.dataset.animal === state.animal));
+    if (!linkMode) chipsEl.forEach(c => c.classList.toggle('on', c.dataset.animal === state.animal));
     clear.hidden = !state.q;
 
     let t = null;
@@ -145,7 +152,9 @@
       try {
         const sp = new URLSearchParams(location.search);
         state.q ? sp.set('q', state.q) : sp.delete('q');
-        state.animal ? sp.set('fajta', state.animal) : sp.delete('fajta');
+        if (linkMode) sp.delete('fajta');
+        else if (state.animal) sp.set('fajta', state.animal);
+        else sp.delete('fajta');
         const qs = sp.toString();
         history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
       } catch (e) {}
@@ -159,11 +168,13 @@
     });
     input.addEventListener('keydown', e => { if (e.key === 'Escape') { input.value = ''; state.q = ''; clear.hidden = true; run(); } });
     clear.addEventListener('click', () => { input.value = ''; state.q = ''; clear.hidden = true; run(); input.focus(); });
-    chipsEl.forEach(c => c.addEventListener('click', () => {
-      state.animal = c.dataset.animal;
-      chipsEl.forEach(x => x.classList.toggle('on', x === c));
-      run();
-    }));
+    if (!linkMode) {
+      chipsEl.forEach(c => c.addEventListener('click', () => {
+        state.animal = c.dataset.animal;
+        chipsEl.forEach(x => x.classList.toggle('on', x === c));
+        run();
+      }));
+    }
     run();
     return { state, run };
   }

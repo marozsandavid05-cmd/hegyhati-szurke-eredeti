@@ -40,7 +40,7 @@ function nav(base, current) {
   <div class="nav__links">
     <a href="${base}index.html" class="nav__link"${cur('index')}>Főoldal</a>
     <a href="${base}termekek.html" class="nav__link"${cur('termekek')}>Termékek</a>
-    <a href="${base}kiszallitas.html" class="nav__link"${cur('kiszallitas')}>Kiszállítás / Előrendelés</a>
+    <a href="${base}kiszallitas.html" class="nav__link"${cur('kiszallitas')}>Kiszállítás</a>
     <a href="${base}rolunk.html" class="nav__link"${cur('rolunk')}>Történetünk</a>
     <a href="${base}kapcsolat.html" class="nav__link"${cur('kapcsolat')}>Kapcsolat</a>
   </div>
@@ -60,7 +60,7 @@ function mnav(base) {
 <div class="mnav">
   <a href="${base}index.html">Főoldal</a>
   <a href="${base}termekek.html">Termékek <small>${N} finomság</small></a>
-  <a href="${base}kiszallitas.html">Kiszállítás <small>előrendelés</small></a>
+  <a href="${base}kiszallitas.html">Kiszállítás</a>
   <a href="${base}rolunk.html">Történetünk</a>
   <a href="${base}kapcsolat.html">Kapcsolat</a>
   <div class="mnav__foot">
@@ -118,7 +118,7 @@ ${catLinks}
       </div>
       <div>
         <h4>Információ</h4>
-        <a href="${base}kiszallitas.html">Kiszállítás / Előrendelés</a>
+        <a href="${base}kiszallitas.html">Kiszállítás</a>
         <a href="${base}szallitas.html">Szállítás és átvétel</a>
         <a href="${base}rolunk.html">Történetünk</a>
         <a href="${base}kapcsolat.html">Kapcsolat</a>
@@ -245,6 +245,72 @@ ${scripts(base, ['js/shop/shop-page.js'])}
 `;
 }
 
+/* ---- 1/b. fajta-oldalak (kategória + fajta, saját hirdethető URL: /mangalica-szalonna) ---- */
+const ANIMAL_LEAD = {
+  sertes: 'Saját tenyésztésű sertésből, hagyományos recept szerint.',
+  mangalica: 'Az őshonos mangalicából: lágyabb zsír, mélyebb íz.',
+  marha: 'Saját tartású marhából, hosszan érlelve.',
+  bivaly: 'Bivalyhúsból: szikárabb, vadabb karakter. Ritkaság a pultban.',
+};
+function comboPage(cb) {
+  const base = '';
+  const c = D.getCategory(cb.category);
+  const a = D.getAnimal(cb.animal);
+  const items = D.PRODUCTS.filter(p => p.category === c.id && p.animal === a.id);
+  const names = items.map(p => p.name).join(', ');
+  return `${head(base, {
+    title: cb.name,
+    desc: `${cb.name} a Hegyháti Finomságoktól, Pécsről: ${names}. ${cb.count} termék, bruttó árak Ft/kg, tájékoztató jelleggel. Rendelés a webshopból, kiszállítás előrendeléssel.`,
+    canonical: `${DOMAIN}/${cb.whole ? c.slug : cb.slug}`,
+    ogImage: `${DOMAIN}/${D.mainPhoto(items[0]) || c.img}`,
+  })}
+<body>
+
+<div class="amb" aria-hidden="true"><div class="amb__vig"></div></div>
+
+${nav(base, 'termekek')}
+
+${mnav(base)}
+
+<header class="cat-hero">
+  <div class="cat-hero__media"><img src="${c.img}" alt="" fetchpriority="high"></div>
+  <div class="wrap">
+    <p class="eyebrow"><a href="termekek.html">Termékek</a> · <a href="${c.slug}.html">${c.name}</a></p>
+    <h1 style="margin-top:1.1rem">${cb.name}</h1>
+    <p class="lead">${ANIMAL_LEAD[a.id] || ''}</p>
+    <p style="margin-top:.8rem;color:var(--muted);font-size:.92rem">${names}.</p>
+  </div>
+</header>
+
+<div class="tabs-wrap" style="margin-top:0"><div class="tabs" id="shopTabs"></div></div>
+
+<main class="wrap" style="padding-block:1.6rem 5rem">
+  ${PRICE_NOTE_BLOCK(base)}
+  <div id="shopTools"></div>
+  <div id="shopRoot" data-cat="${c.id}" data-animal="${a.id}" style="margin-top:2rem">
+    <noscript><p style="padding:3rem 0;color:var(--muted)">${cb.name}: ${names}. A terméklistához és a rendeléshez JavaScript szükséges. Árlistánkért hívjon minket: ${SITE.phone}.</p></noscript>
+  </div>
+  <p style="margin-top:2.4rem"><a href="${c.slug}.html" class="btn btn--ghost btn--sm" data-magnet>Összes ${c.name.toLowerCase()} megtekintése</a></p>
+</main>
+
+<section class="lip">
+  <div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2rem">
+    <div>
+      <h2 style="font-size:var(--step-2)" data-reveal>Kiszállítás előrendeléssel, péntek és szombat</h2>
+      <p style="color:var(--muted);margin-top:.7rem;max-width:52ch" data-reveal>Pénteken a hegyháti falvakba, szombaton Pécsre és környékére visszük, minden hónap első hetében és közepén. Vagy vegye át a Pécsi Vásárcsarnokban.</p>
+    </div>
+    <a href="kiszallitas.html" class="btn btn--ghost" data-magnet>Kiszállítás részletei</a>
+  </div>
+</section>
+
+${footer(base, 'full')}
+
+${scripts(base, ['js/shop/shop-page.js'])}
+</body>
+</html>
+`;
+}
+
 /* ---- 2. termékoldalak ---- */
 function productPage(p) {
   const base = '../';
@@ -306,6 +372,7 @@ function sitemap() {
   const urls = [
     ['/', '1.0'], ['/termekek', '0.9'],
     ...D.CATEGORIES.map(c => ['/' + c.slug, '0.8']),
+    ...D.COMBOS.filter(cb => !cb.whole).map(cb => ['/' + cb.slug, '0.7']),
     ['/kiszallitas', '0.7'], ['/szallitas', '0.6'], ['/rolunk', '0.7'], ['/kapcsolat', '0.6'],
     ...D.PRODUCTS.map(p => ['/termek/' + p.id, '0.6']),
   ];
@@ -350,9 +417,15 @@ function syncPage(file) {
 }
 
 /* ---- futtatás ---- */
-const GENERATED = new Set(D.CATEGORIES.map(c => c.slug + '.html'));
+const GENERATED = new Set([...D.CATEGORIES.map(c => c.slug + '.html'), ...D.COMBOS.map(cb => cb.slug + '.html')]);
 let n = 0;
 for (const c of D.CATEGORIES) { fs.writeFileSync(path.join(ROOT, c.slug + '.html'), categoryPage(c), 'utf8'); n++; }
+for (const cb of D.COMBOS) { fs.writeFileSync(path.join(ROOT, cb.slug + '.html'), comboPage(cb), 'utf8'); n++; }
+/* elavult fajta-oldalak törlése (ha egy kombinációhoz már nincs termék) */
+const ANIMAL_RE = new RegExp('^(' + D.ANIMALS.map(a => a.id).join('|') + ')-.+\.html$');
+for (const f of fs.readdirSync(ROOT)) {
+  if (ANIMAL_RE.test(f) && !GENERATED.has(f)) fs.unlinkSync(path.join(ROOT, f));
+}
 fs.mkdirSync(path.join(ROOT, 'termek'), { recursive: true });
 /* elavult termékoldalak törlése */
 for (const f of fs.readdirSync(path.join(ROOT, 'termek'))) {
@@ -365,4 +438,4 @@ for (const f of fs.readdirSync(ROOT)) {
   if (!f.endsWith('.html') || GENERATED.has(f)) continue;
   if (syncPage(path.join(ROOT, f))) synced++;
 }
-console.log(`generált: ${n} oldal (${D.CATEGORIES.length} kategória + ${D.PRODUCTS.length} termék), sitemap.xml, szinkronizált kézi oldal: ${synced}`);
+console.log(`generált: ${n} oldal (${D.CATEGORIES.length} kategória + ${D.COMBOS.length} fajta-oldal + ${D.PRODUCTS.length} termék), sitemap.xml, szinkronizált kézi oldal: ${synced}`);

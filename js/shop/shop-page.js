@@ -12,10 +12,12 @@
 
   const catId = root.dataset.cat || null;
   const cat = catId ? HFDATA.getCategory(catId) : null;
+  /* fajta-oldal (/mangalica-szalonna): a kategórián belül egy fajta, saját URL-en */
+  const animalId = (root.dataset.animal && HFDATA.getAnimal(root.dataset.animal)) ? root.dataset.animal : null;
 
   /* ---- render ---- */
   if (cat) {
-    const items = HFDATA.PRODUCTS.filter(p => p.category === cat.id);
+    const items = HFDATA.PRODUCTS.filter(p => p.category === cat.id && (!animalId || p.animal === animalId));
     root.innerHTML =
       '<div class="pgrid">' + items.map(p => HFCAT.card(p)).join('') + '</div>' +
       '<p class="shop-empty is-hidden">Nincs ilyen termék ebben a kategóriában. <a href="' + HF.link('termekek.html') + '">Keresés a teljes kínálatban</a></p>';
@@ -41,17 +43,47 @@
 
   /* ---- keresés + szűrő ---- */
   if (toolsEl) {
+    const catAnimals = cat ? HFDATA.animalsInCategory(cat.id) : null;
+    /* kategória-oldalon a fajta-csipek LINKEK: minden kombinációnak saját, hirdethető URL-je van */
+    let animalLinks = null;
+    if (cat && catAnimals) {
+      animalLinks = { '': HF.link(cat.slug + '.html') };
+      catAnimals.forEach(a => {
+        const cb = HFDATA.getCombo(cat.id, a);
+        if (cb) animalLinks[a] = HF.link(cb.slug + '.html');
+      });
+    }
+    /* a teljes kínálat oldalán: ha fajta-szűrő aktív, a kategória-fejlécek a fajta-oldalra visznek */
+    function syncCatLinks(animal) {
+      HFDATA.CATEGORIES.forEach(c => {
+        const sec = document.getElementById('kat-' + c.id);
+        if (!sec) return;
+        const cb = animal ? HFDATA.getCombo(c.id, animal) : null;
+        const href = HF.link((cb ? cb.slug : c.slug) + '.html');
+        sec.querySelectorAll('.cat-head h2 a, .cat-head__count').forEach(a => a.setAttribute('href', href));
+        const cnt = sec.querySelector('.cat-head__count');
+        if (cnt) cnt.innerHTML = sec.querySelectorAll('.pcard:not(.is-hidden)').length + ' termék ' + HFCAT.ARROW;
+      });
+    }
     HFCAT.mountTools(toolsEl, root, {
-      placeholder: cat ? ('Keresés a(z) ' + cat.name.toLowerCase() + ' termékek között…') : 'Keresés a termékek között…',
-      animals: cat ? [...new Set(HFDATA.PRODUCTS.filter(p => p.category === cat.id).map(p => p.animal))] : null,
+      placeholder: cat ? ('Keresés a(z) ' + (animalId ? HFDATA.getCombo(cat.id, animalId).name : cat.name).toLowerCase() + ' termékek között…') : 'Keresés a termékek között…',
+      animals: catAnimals,
+      animalLinks: animalLinks,
+      currentAnimal: animalId || '',
+      onApply: cat ? null : function (shown, state) { syncCatLinks(state.animal); },
     });
   }
 
   /* ---- sticky sáv ---- */
   if (tabsEl) {
     if (cat) {
+      /* fajta-oldalon a kategória-sáv viszi tovább a fajtát, ha van olyan kombináció */
+      const tabHref = c => {
+        const cb = animalId ? HFDATA.getCombo(c.id, animalId) : null;
+        return HF.link((cb ? cb.slug : c.slug) + '.html');
+      };
       tabsEl.innerHTML = '<a class="tab" href="' + HF.link('termekek.html') + '">Összes</a>' +
-        HFDATA.CATEGORIES.map(c => '<a class="tab' + (c.id === cat.id ? ' on' : '') + '" href="' + HF.link(c.slug + '.html') + '"' + (c.id === cat.id ? ' aria-current="page"' : '') + '>' + c.name + '</a>').join('') +
+        HFDATA.CATEGORIES.map(c => '<a class="tab' + (c.id === cat.id ? ' on' : '') + '" href="' + tabHref(c) + '"' + (c.id === cat.id ? ' aria-current="page"' : '') + '>' + c.name + '</a>').join('') +
         '<span class="tabs__ind" aria-hidden="true"></span>';
       const ind = tabsEl.querySelector('.tabs__ind');
       const on = tabsEl.querySelector('.tab.on');

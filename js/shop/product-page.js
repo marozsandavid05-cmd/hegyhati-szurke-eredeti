@@ -44,6 +44,18 @@
       '</div>'
     : '';
 
+  /* fotó-jelzés: a teljes sor egészben, elvágva, szeletelve. Ami hiányzik, azt kiírjuk. */
+  const noteText = !p.photos || !p.photos.length
+    ? 'A termék fotója hamarosan várható.'
+    : p.photoInfo === 'illus'
+      ? 'A képen illusztráció látható. A termék saját fotója hamarosan várható, egészben, elvágva és szeletelve is.'
+      : p.photoInfo === 'partial'
+        ? 'További fotók hamarosan várhatók a termékről, elvágva és szeletelve is.'
+        : '';
+  const photoNote = noteText
+    ? '<p class="pdet__phnote"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="12" cy="12" r="3.2"/></svg><span>' + noteText + '</span></p>'
+    : '';
+
   const unitToggle = (canPiece && canKg)
     ? '<div class="unit-toggle" role="radiogroup" aria-label="Mennyiség egysége">' +
         '<label class="unit-opt"><input type="radio" name="unit" value="kg"' + (unit === 'kg' ? ' checked' : '') + '><span>Súlyra <small>kg, 0,25 kg lépés</small></span></label>' +
@@ -55,6 +67,7 @@
     '<div class="pdet__gal">' +
       '<figure class="pdet__media"><img id="pdetImg" src="' + HF.asset(photos[0]) + '" alt="' + p.name + '" width="1200" height="750"></figure>' +
       gallery +
+      photoNote +
     '</div>' +
     '<div>' +
       '<p class="eyebrow">' + cat.name + (an && p.animal !== 'sertes' ? ' · ' + an.name : '') + '</p>' +
