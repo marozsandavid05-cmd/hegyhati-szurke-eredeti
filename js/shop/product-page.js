@@ -74,6 +74,11 @@
       '<h1 class="pdet__name">' + p.name + '</h1>' +
       '<p class="pdet__price num-tab">' + fmt(p.price) + '<small>/' + (fixedPiece ? 'db' : 'kg') + ' · bruttó · tájékoztató ár</small></p>' +
       '<p class="pdet__desc">' + p.desc + '</p>' +
+      (!HFDATA.inStock(p) ? (
+      '<div class="pdet__soldout" role="status">' +
+        '<strong>Jelenleg nincs készleten</strong>' +
+        '<p>Ez a termék most nem rendelhető. Ha újra lesz, itt azonnal kosárba teheti. Érdeklődjön telefonon: <a class="num-tab" href="' + HF.SITE.phoneHref + '">' + HF.SITE.phone + '</a></p>' +
+      '</div>') : (
       '<form class="pdet__form" id="buyForm">' +
         '<div>' +
           '<span class="fld-label">Mennyiség</span>' +
@@ -114,7 +119,7 @@
           '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>' +
           HF.PRICE_NOTE.long +
         '</p>' +
-      '</form>' +
+      '</form>')) +
     '</div>';
 
   /* ---- galéria ---- */
@@ -123,6 +128,13 @@
     img.src = b.dataset.ph;
     root.querySelectorAll('.pdet__thumb').forEach(x => x.classList.toggle('on', x === b));
   }));
+
+  /* nincs készleten: nincs űrlap, a mobil buybar is rejtve marad */
+  if (!HFDATA.inStock(p)) {
+    const bb = document.getElementById('buybar'); if (bb) bb.remove();
+    renderRelated();
+    return;
+  }
 
   /* ---- mennyiség ---- */
   const qIn = root.querySelector('#qIn');
@@ -204,12 +216,17 @@
   }, 120));
 
   /* ---- kapcsolódó termékek ---- */
-  const rel = HFDATA.PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 3);
-  const relSec = document.getElementById('relatedSec');
-  if (rel.length && relSec && window.HFCAT) {
-    relSec.style.display = '';
-    const grid = document.getElementById('relatedGrid');
-    grid.innerHTML = rel.map(r => HFCAT.card(r, { reveal: false, noFlag: true })).join('');
-    HFCAT.bindQuickAdd(grid);
+  renderRelated();
+
+  function renderRelated() {
+    const rel = HFDATA.PRODUCTS.filter(x => x.category === p.category && x.id !== p.id)
+      .sort((a, b) => HFDATA.inStock(b) - HFDATA.inStock(a)).slice(0, 3);
+    const relSec = document.getElementById('relatedSec');
+    if (rel.length && relSec && window.HFCAT) {
+      relSec.style.display = '';
+      const grid = document.getElementById('relatedGrid');
+      grid.innerHTML = rel.map(r => HFCAT.card(r, { reveal: false, noFlag: true })).join('');
+      HFCAT.bindQuickAdd(grid);
+    }
   }
 })();

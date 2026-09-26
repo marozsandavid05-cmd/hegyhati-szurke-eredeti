@@ -1,0 +1,11 @@
+# megszűnt kategóriák (Kinga 2026-09-25): a régi, esetleg már megosztott URL-ek átirányítása
+/pacolt-hus               /kulonlegessegek          301
+/pacolt-hus.html          /kulonlegessegek          301
+/sertes-pacolt-hus        /sertes-kulonlegessegek   301
+/sertes-pacolt-hus.html   /sertes-kulonlegessegek   301
+/marha-pacolt-hus         /marha-kulonlegessegek    301
+/marha-pacolt-hus.html    /marha-kulonlegessegek    301
+/majas                    /kolbasz                  301
+/majas.html               /kolbasz                  301
+/sertes-majas             /kolbasz                  301
+/sertes-majas.html        /kolbasz                  301

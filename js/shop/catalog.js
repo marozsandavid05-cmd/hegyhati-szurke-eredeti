@@ -46,11 +46,14 @@
     o = o || {};
     const needsPage = !!p.options.spice;
     const url = HF.link('termek/' + p.id + '.html');
-    const btn = o.noButton ? '' : (needsPage
+    const soldOut = !HFDATA.inStock(p);
+    const btn = o.noButton ? '' : soldOut
+      ? '<span class="pcard__soldout">Nincs készleten</span>'
+      : (needsPage
       ? '<a class="btn btn--sm btn--ghost" href="' + url + '">Választás ' + ARROW + '</a>'
       : '<button class="btn btn--sm" type="button" data-qadd="' + p.id + '">Kosárba</button>');
     return '' +
-      '<article class="pcard" data-id="' + p.id + '" data-cat="' + p.category + '" data-animal="' + p.animal + '" data-search="' + HFDATA.searchIndex(p) + '"' + (o.reveal === false ? '' : ' data-reveal') + '>' +
+      '<article class="pcard' + (soldOut ? ' pcard--soldout' : '') + '" data-id="' + p.id + '" data-cat="' + p.category + '" data-animal="' + p.animal + '" data-search="' + HFDATA.searchIndex(p) + '"' + (o.reveal === false ? '' : ' data-reveal') + '>' +
         '<a class="pcard__link" href="' + url + '" aria-label="' + p.name + '"></a>' +
         (p.featured && !o.noFlag ? '<span class="pcard__flag">Kiemelt</span>' : '') +
         '<figure class="pcard__media"><img src="' + thumbSrc(p) + '" alt="' + p.name + '" loading="lazy" width="600" height="375"></figure>' +

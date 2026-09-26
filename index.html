@@ -50,7 +50,7 @@
 <!-- @mnav -->
 <div class="mnav">
   <a href="index.html">Főoldal</a>
-  <a href="termekek.html">Termékek <small>35 finomság</small></a>
+  <a href="termekek.html">Termékek <small>36 finomság</small></a>
   <a href="kiszallitas.html">Kiszállítás</a>
   <a href="rolunk.html">Történetünk</a>
   <a href="kapcsolat.html">Kapcsolat</a>
@@ -177,8 +177,8 @@
 
 <!-- ============ MARQUEE ============ -->
 <div class="marquee" aria-hidden="true"><div class="marquee__inner">
-  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Pácolt hús <em>·</em> Tepertő <em>·</em> Májas <em>·</em> Kulen <em>·</em> </span>
-  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Pácolt hús <em>·</em> Tepertő <em>·</em> Májas <em>·</em> Kulen <em>·</em> </span>
+  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Különlegességek <em>·</em> Tepertő <em>·</em> Hurka <em>·</em> Kulen <em>·</em> </span>
+  <span>Sonka <em>·</em> Szalonna <em>·</em> Kolbász <em>·</em> Szalámi <em>·</em> Különlegességek <em>·</em> Tepertő <em>·</em> Hurka <em>·</em> Kulen <em>·</em> </span>
 </div></div>
 
 <!-- ============ KISZÁLLÍTÁS ELŐRENDELÉSSEL (teaser) ============ -->
@@ -266,9 +266,8 @@
         <a href="szalonna.html">Szalonna</a>
         <a href="kolbasz.html">Kolbász</a>
         <a href="szalami.html">Szalámi</a>
-        <a href="pacolt-hus.html">Pácolt hús</a>
+        <a href="kulonlegessegek.html">Különlegességek</a>
         <a href="teperto.html">Tepertő</a>
-        <a href="majas.html">Májas</a>
         <a href="termekek.html">Teljes kínálat</a>
       </div>
       <div>
@@ -318,7 +317,7 @@
   g.innerHTML = feat.map((p, i) => HFCAT.card(p).replace('data-reveal', 'data-reveal data-delay="' + (i % 3) + '"')).join('') +
     '<article class="pcard pcard--all" data-reveal data-delay="2" style="justify-content:center;align-items:flex-start;padding:2rem;background:transparent;border-style:dashed">' +
       '<h3 class="pcard__name" style="font-size:1.6rem;max-width:12ch">Még ' + (HFDATA.PRODUCTS.length - feat.length) + ' finomság várja</h3>' +
-      '<p class="pcard__desc" style="margin-top:.6rem">Sonkák, szalonnák, szalámik, pácolt húsok, tepertő és májas.</p>' +
+      '<p class="pcard__desc" style="margin-top:.6rem">Sonkák, szalonnák, kolbászok, szalámik, különlegességek és tepertő.</p>' +
       '<a class="btn btn--sm" style="margin-top:1.4rem" href=' + JSON.stringify(HF.link('termekek.html')) + '>Teljes kínálat ' + HFCAT.ARROW + '</a>' +
     '</article>';
   HFCAT.bindQuickAdd(g);

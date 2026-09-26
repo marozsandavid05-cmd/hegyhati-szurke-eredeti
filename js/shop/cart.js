@@ -60,6 +60,7 @@
   function add(productId, unit, qty, opts) {
     const p = window.HFDATA && HFDATA.getProduct(productId);
     if (!p) return false;
+    if (HFDATA.inStock && !HFDATA.inStock(p)) return false; /* nincs készleten */
     unit = (unit === 'db' && p.piece) ? 'db' : 'kg';
     if (p.priceUnit === 'db') unit = 'db';
     const spice = (opts && opts.spice) || null;
@@ -110,7 +111,8 @@
   function items() {
     return readRaw().items.map(i => {
       const p = window.HFDATA ? HFDATA.getProduct(i.productId) : null;
-      return p ? enrich(i, p) : null;
+      /* a korábban kosárba tett, azóta kifogyott termék kimarad a rendelésből */
+      return p && (!HFDATA.inStock || HFDATA.inStock(p)) ? enrich(i, p) : null;
     }).filter(Boolean);
   }
 

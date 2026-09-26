@@ -2,7 +2,7 @@
    HEGYHÁTI FINOMSÁGOK, statikus oldal-generátor (Node, függőség nélkül)
    Futtatás a projekt gyökeréből:  node tools/gen-pages.js
    Mit csinál:
-     1. 7 kategória-oldal a gyökérbe (sonka.html, szalonna.html, ... → élesben /sonka)
+     1. kategória-oldalak a gyökérbe (sonka.html, szalonna.html, ... → élesben /sonka)
      2. termek/<id>.html minden termékhez (→ élesben /termek/<id>), Product JSON-LD-vel
      3. sitemap.xml tiszta (.html nélküli) URL-ekkel
      4. a kézzel írt oldalakban a <!-- @nav -->, <!-- @mnav -->, <!-- @footer ... --> blokkok
@@ -321,7 +321,7 @@ function productPage(p) {
     '@context': 'https://schema.org', '@type': 'Product',
     name: p.name, description: p.desc, image: img, category: c.name,
     brand: { '@type': 'Brand', name: 'Hegyháti Finomságok' },
-    offers: { '@type': 'Offer', priceCurrency: 'HUF', price: p.price, availability: 'https://schema.org/InStock',
+    offers: { '@type': 'Offer', priceCurrency: 'HUF', price: p.price, availability: D.inStock(p) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: `${DOMAIN}/termek/${p.id}`,
       priceSpecification: { '@type': 'UnitPriceSpecification', price: p.price, priceCurrency: 'HUF', unitText: p.priceUnit === 'db' ? 'darab' : 'kilogramm' },
       description: 'Az ár tájékoztató jellegű, mérlegelt áru.' },
@@ -421,6 +421,10 @@ const GENERATED = new Set([...D.CATEGORIES.map(c => c.slug + '.html'), ...D.COMB
 let n = 0;
 for (const c of D.CATEGORIES) { fs.writeFileSync(path.join(ROOT, c.slug + '.html'), categoryPage(c), 'utf8'); n++; }
 for (const cb of D.COMBOS) { fs.writeFileSync(path.join(ROOT, cb.slug + '.html'), comboPage(cb), 'utf8'); n++; }
+/* megszűnt kategória-oldalak törlése (a régi URL-eket a _redirects irányítja át) */
+for (const f of ['pacolt-hus.html', 'majas.html']) {
+  if (!GENERATED.has(f) && fs.existsSync(path.join(ROOT, f))) fs.unlinkSync(path.join(ROOT, f));
+}
 /* elavult fajta-oldalak törlése (ha egy kombinációhoz már nincs termék) */
 const ANIMAL_RE = new RegExp('^(' + D.ANIMALS.map(a => a.id).join('|') + ')-.+\.html$');
 for (const f of fs.readdirSync(ROOT)) {
