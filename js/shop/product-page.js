@@ -77,8 +77,10 @@
       (!HFDATA.inStock(p) ? (
       '<div class="pdet__soldout" role="status">' +
         '<strong>Jelenleg nincs készleten</strong>' +
-        '<p>Ez a termék most nem rendelhető. Ha újra lesz, itt azonnal kosárba teheti. Érdeklődjön telefonon: <a class="num-tab" href="' + HF.SITE.phoneHref + '">' + HF.SITE.phone + '</a></p>' +
-      '</div>') : (
+        '<p>' + (HF.ordering ? 'Ez a termék most nem rendelhető. Ha újra lesz, itt azonnal kosárba teheti. ' : 'Ez a termék most nem kapható. ') + 'Érdeklődjön telefonon: <a class="num-tab" href="' + HF.SITE.phoneHref + '">' + HF.SITE.phone + '</a></p>' +
+      '</div>') : !HF.ordering ? (
+      /* online rendelés kikapcsolva: a vásárló-űrlap helyén a „helyben vásárolható” blokk */
+      HF.instoreHtml('side')) : (
       '<form class="pdet__form" id="buyForm">' +
         '<div>' +
           '<span class="fld-label">Mennyiség</span>' +
@@ -129,9 +131,10 @@
     root.querySelectorAll('.pdet__thumb').forEach(x => x.classList.toggle('on', x === b));
   }));
 
-  /* nincs készleten: nincs űrlap, a mobil buybar is rejtve marad */
-  if (!HFDATA.inStock(p)) {
+  /* nincs készleten, vagy online rendelés nélkül: nincs űrlap, a mobil buybar is rejtve marad */
+  if (!HFDATA.inStock(p) || !HF.ordering) {
     const bb = document.getElementById('buybar'); if (bb) bb.remove();
+    if (HF.upgradeMail) HF.upgradeMail(root);
     renderRelated();
     return;
   }

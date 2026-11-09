@@ -4,6 +4,8 @@
    ========================================================================== */
 (function () {
   if (!window.HFCART || !window.HF) return;
+  /* online rendelés kikapcsolva (config.js FLAGS.ORDERING:false): nincs kosár-fiók, nincs toast */
+  if (!HF.ordering) return;
 
   /* ---- DOM injektálás ---- */
   const ov = document.createElement('div');

@@ -25,6 +25,11 @@ const HF = ctx.window.HF;
 const D = ctx.window.HFDATA;
 const SITE = HF.SITE;
 const N = D.PRODUCTS.length;
+/* online rendelés kapcsoló (config.js FLAGS.ORDERING) */
+const ORDERING = HF.ordering;
+const BUY_META = ORDERING ? 'Rendelés a webshopból, kiszállítás előrendeléssel.' : 'Vásárlás helyben, a Pécsi Vásárcsarnokban, kiszállítás előrendeléssel.';
+const NOSCRIPT_LIST = ORDERING ? 'A terméklistához és a rendeléshez JavaScript szükséges.' : 'A terméklistához JavaScript szükséges. A termékek helyben, a Pécsi Vásárcsarnokban vásárolhatók.';
+const INSTORE = (variant) => ORDERING ? '' : HF.instoreHtml(variant);
 
 const CART_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1 1 0 0 1-1 1.1H5.8a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>';
 
@@ -45,11 +50,11 @@ function nav(base, current) {
     <a href="${base}kapcsolat.html" class="nav__link"${cur('kapcsolat')}>Kapcsolat</a>
   </div>
   <div class="nav__cta">
-    <button class="cart-btn" id="cartBtn" aria-label="Kosár megnyitása">
+${ORDERING ? `    <button class="cart-btn" id="cartBtn" aria-label="Kosár megnyitása">
       ${CART_SVG}
       <span class="cart-btn__badge" id="cartBadge">0</span>
     </button>
-    <button class="burger" aria-label="Menü" aria-expanded="false"><span></span></button>
+` : ''}    <button class="burger" aria-label="Menü" aria-expanded="false"><span></span></button>
   </div>
 </nav>
 <!-- @/nav -->`;
@@ -183,7 +188,9 @@ ${extra.map(s => `<script src="${base}${s}"></script>`).join('\n')}`;
 
 const PRICE_NOTE_BLOCK = (base) => `<div class="price-note" style="margin-top:1.8rem">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
-    <span><strong>Minden ár tájékoztató jellegű.</strong> Bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, ezért a kosár összege becslés. A pontos végösszeg a mérés után, átvételkor derül ki. Súlyra (0,25 kg lépésben) vagy darabra, párra is kérheti.</span>
+    ${ORDERING
+    ? '<span><strong>Minden ár tájékoztató jellegű.</strong> Bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, ezért a kosár összege becslés. A pontos végösszeg a mérés után, átvételkor derül ki. Súlyra (0,25 kg lépésben) vagy darabra, párra is kérheti.</span>'
+    : '<span><strong>Helyben, az üzletben vásárolható.</strong> Minden ár tájékoztató jellegű: bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, a pontos végösszeg a mérés után, a pultnál derül ki. Súlyra vagy darabra, párra is kérheti.</span>'}
   </div>`;
 
 /* ---- 1. kategória-oldalak ---- */
@@ -193,7 +200,7 @@ function categoryPage(c) {
   const names = items.map(p => p.name).join(', ');
   return `${head(base, {
     title: c.name,
-    desc: `${c.seo} ${items.length} termék, bruttó árak Ft/kg, tájékoztató jelleggel. Rendelés a webshopból, kiszállítás előrendeléssel.`,
+    desc: `${c.seo} ${items.length} termék, bruttó árak Ft/kg, tájékoztató jelleggel. ${BUY_META}`,
     canonical: `${DOMAIN}/${c.slug}`,
     ogImage: `${DOMAIN}/${c.img}`,
   })}
@@ -223,8 +230,9 @@ ${mnav(base)}
   ${PRICE_NOTE_BLOCK(base)}
   <div id="shopTools"></div>
   <div id="shopRoot" data-cat="${c.id}" style="margin-top:2rem">
-    <noscript><p style="padding:3rem 0;color:var(--muted)">A terméklistához és a rendeléshez JavaScript szükséges. Árlistánkért hívjon minket: ${SITE.phone}.</p></noscript>
+    <noscript><p style="padding:3rem 0;color:var(--muted)">${NOSCRIPT_LIST} Árlistánkért hívjon minket: ${SITE.phone}.</p></noscript>
   </div>
+  ${INSTORE('wide')}
 </main>
 
 <section class="lip">
@@ -260,7 +268,7 @@ function comboPage(cb) {
   const names = items.map(p => p.name).join(', ');
   return `${head(base, {
     title: cb.name,
-    desc: `${cb.name} a Hegyháti Finomságoktól, Pécsről: ${names}. ${cb.count} termék, bruttó árak Ft/kg, tájékoztató jelleggel. Rendelés a webshopból, kiszállítás előrendeléssel.`,
+    desc: `${cb.name} a Hegyháti Finomságoktól, Pécsről: ${names}. ${cb.count} termék, bruttó árak Ft/kg, tájékoztató jelleggel. ${BUY_META}`,
     canonical: `${DOMAIN}/${cb.whole ? c.slug : cb.slug}`,
     ogImage: `${DOMAIN}/${D.mainPhoto(items[0]) || c.img}`,
   })}
@@ -288,9 +296,10 @@ ${mnav(base)}
   ${PRICE_NOTE_BLOCK(base)}
   <div id="shopTools"></div>
   <div id="shopRoot" data-cat="${c.id}" data-animal="${a.id}" style="margin-top:2rem">
-    <noscript><p style="padding:3rem 0;color:var(--muted)">${cb.name}: ${names}. A terméklistához és a rendeléshez JavaScript szükséges. Árlistánkért hívjon minket: ${SITE.phone}.</p></noscript>
+    <noscript><p style="padding:3rem 0;color:var(--muted)">${cb.name}: ${names}. ${NOSCRIPT_LIST} Árlistánkért hívjon minket: ${SITE.phone}.</p></noscript>
   </div>
   <p style="margin-top:2.4rem"><a href="${c.slug}.html" class="btn btn--ghost btn--sm" data-magnet>Összes ${c.name.toLowerCase()} megtekintése</a></p>
+  ${INSTORE('wide')}
 </main>
 
 <section class="lip">
@@ -344,7 +353,7 @@ ${mnav(base)}
 <main class="wrap" style="padding-top:8.6rem;padding-bottom:4rem">
   <nav class="crumbs" id="crumbs" aria-label="Morzsamenü"></nav>
   <div class="pdet" id="pdetRoot" data-id="${p.id}">
-    <noscript><p style="color:var(--muted)">${p.name}, ${HF.formatFt(p.price)}/${p.priceUnit === 'db' ? 'db' : 'kg'} (tájékoztató ár). ${p.desc} A rendeléshez JavaScript szükséges, vagy hívjon minket: ${SITE.phone}.</p></noscript>
+    <noscript><p style="color:var(--muted)">${p.name}, ${HF.formatFt(p.price)}/${p.priceUnit === 'db' ? 'db' : 'kg'} (tájékoztató ár). ${p.desc} ${ORDERING ? `A rendeléshez JavaScript szükséges, vagy hívjon minket: ${SITE.phone}.` : `Helyben, az üzletben vásárolható: ${SITE.address}. Telefon: ${SITE.phone}, e-mail: ${SITE.email}.`}</p></noscript>
   </div>
 
   <section id="relatedSec" style="padding-bottom:2rem;display:none">
@@ -353,12 +362,12 @@ ${mnav(base)}
   </section>
 </main>
 
-<!-- Mobil sticky vásárló-sáv -->
+${ORDERING ? `<!-- Mobil sticky vásárló-sáv -->
 <div class="buybar" id="buybar" aria-hidden="true">
   <span class="buybar__price num-tab" id="buybarPrice">~0 Ft</span>
   <button class="btn btn--solid btn--sm" id="buybarAdd" type="button">Kosárba</button>
 </div>
-
+` : ''}
 ${footer(base, 'mini')}
 
 ${scripts(base, ['js/shop/product-page.js'])}
@@ -384,6 +393,24 @@ ${urls.map(([u, pr]) => `  <url><loc>${DOMAIN}${u}</loc><priority>${pr}</priorit
 }
 
 /* ---- 4. kézzel írt oldalak szinkronja ---- */
+/* Rendelés-kapcsolós blokkok a kézi oldalakban: <!-- @ord kulcs --> ... <!-- @/ord -->
+   [ORDERING:true tartalom, ORDERING:false tartalom] */
+const ORD_BLOCKS = {
+  /* penztar, fizetes-demo, koszonjuk: online rendelés nélkül azonnal a Kapcsolatra visz */
+  'noorder': ['', `<meta http-equiv="refresh" content="0;url=kapcsolat.html">
+<style>body{visibility:hidden}</style>
+<script>location.replace(/^https?:$/.test(location.protocol) ? 'kapcsolat' : 'kapcsolat.html');</script>`],
+  'termekek-lead': [
+    'Minden, ami a pécsi pultunkban is várja, saját tenyésztésből, kézzel készítve. Keressen, szűrjön fajta szerint, tegye kosárba súlyra vagy darabra, a többit mi intézzük.',
+    'Minden, ami a pécsi pultunkban is várja, saját tenyésztésből, kézzel készítve. Keressen, szűrjön fajta szerint, és vásárolja meg helyben, az üzletünkben.'],
+  'termekek-note': [PRICE_NOTE_BLOCK(''), PRICE_NOTE_BLOCK('')],
+  'termekek-instore': ['', `<div class="wrap" style="padding-bottom:5rem">${INSTORE('wide')}</div>`],
+  'noscript-list': ['A terméklistához és a rendeléshez JavaScript szükséges.', NOSCRIPT_LIST],
+  'buybar': [`<div class="buybar" id="buybar" aria-hidden="true">
+  <span class="buybar__price num-tab" id="buybarPrice">~0 Ft</span>
+  <button class="btn btn--solid btn--sm" id="buybarAdd" type="button">Kosárba</button>
+</div>`, ''],
+};
 const CURRENT = { 'index.html': 'index', 'termekek.html': 'termekek', 'termek.html': 'termekek', 'kiszallitas.html': 'kiszallitas', 'rolunk.html': 'rolunk', 'kapcsolat.html': 'kapcsolat' };
 function syncPage(file) {
   let s = fs.readFileSync(file, 'utf8');
@@ -409,6 +436,8 @@ function syncPage(file) {
   s = s.replace(/<!-- @nav -->[\s\S]*?<!-- @\/nav -->/, () => nav(base, current));
   s = s.replace(/<!-- @mnav -->[\s\S]*?<!-- @\/mnav -->/, () => mnav(base));
   s = s.replace(/<!-- @footer ([\w ]+) -->[\s\S]*?<!-- @\/footer -->/, (m, type) => footer(base, type.trim()));
+  s = s.replace(/<!-- @ord ([\w-]+) -->[\s\S]*?<!-- @\/ord -->/g, (m, key) =>
+    ORD_BLOCKS[key] ? `<!-- @ord ${key} -->${ORD_BLOCKS[key][ORDERING ? 0 : 1]}<!-- @/ord -->` : m);
   /* favicon egységesítés */
   s = s.replace(/<link rel="icon" type="image\/png" href="media\/logo-emblem\.png">/, '<link rel="icon" type="image/png" sizes="256x256" href="media/favicon.png">\n<link rel="apple-touch-icon" href="media/apple-touch-icon.png">');
   changed = s !== before;

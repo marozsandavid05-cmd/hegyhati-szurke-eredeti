@@ -49,6 +49,8 @@
     const soldOut = !HFDATA.inStock(p);
     const btn = o.noButton ? '' : soldOut
       ? '<span class="pcard__soldout">Nincs készleten</span>'
+      : !HF.ordering
+      ? '<span class="pcard__instore">Az üzletben kapható</span>'
       : (needsPage
       ? '<a class="btn btn--sm btn--ghost" href="' + url + '">Választás ' + ARROW + '</a>'
       : '<button class="btn btn--sm" type="button" data-qadd="' + p.id + '">Kosárba</button>');

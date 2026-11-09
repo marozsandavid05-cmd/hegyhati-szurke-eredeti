@@ -15,6 +15,8 @@ if (window.HF && HF.cleanUrl && /^https?:$/.test(location.protocol)) {
     if (c !== h) a.setAttribute('href', c);
   });
 }
+/* ---- E-mail: asztali gépen Gmail írás-ablak, telefonon mailto: (config.js upgradeMail) ---- */
+if (window.HF && HF.upgradeMail) HF.upgradeMail();
 const touch   = matchMedia('(hover:none)').matches;
 const hasGSAP = typeof gsap !== 'undefined';
 
