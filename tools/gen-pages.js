@@ -27,7 +27,7 @@ const SITE = HF.SITE;
 const N = D.PRODUCTS.length;
 /* online rendelés kapcsoló (config.js FLAGS.ORDERING) */
 const ORDERING = HF.ordering;
-const BUY_META = ORDERING ? 'Rendelés a webshopból, kiszállítás előrendeléssel.' : 'Vásárlás helyben, a Pécsi Vásárcsarnokban, kiszállítás előrendeléssel.';
+const BUY_META = ORDERING ? 'Rendelés a webshopból, kiszállítás előrendeléssel.' : 'Vásárlás helyben, a Pécsi Vásárcsarnokban, vagy rendelés telefonon, kiszállítás előrendeléssel.';
 const NOSCRIPT_LIST = ORDERING ? 'A terméklistához és a rendeléshez JavaScript szükséges.' : 'A terméklistához JavaScript szükséges. A termékek helyben, a Pécsi Vásárcsarnokban vásárolhatók.';
 const INSTORE = (variant) => ORDERING ? '' : HF.instoreHtml(variant);
 
@@ -96,8 +96,8 @@ ${bottom.replace('<div class="footer__bottom">', '<div class="footer__bottom" st
   const ctaBlock = cta ? `    <div class="footer__cta">
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2.4rem;justify-content:space-between">
         <h2 data-reveal>Kóstolja meg, amit mi magunk készítünk.</h2>
-        <a href="${base}termekek.html" class="btn btn--solid" data-magnet>Rendelek
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+${ORDERING ? `        <a href="${base}termekek.html" class="btn btn--solid" data-magnet>Rendelek
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>` : `        <a href="${SITE.phoneHref}" class="btn btn--solid num-tab" data-magnet aria-label="Rendelés telefonon: ${SITE.phone}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Rendelés telefonon</a>`}
       </div>
     </div>
 ` : '';
@@ -190,7 +190,7 @@ const PRICE_NOTE_BLOCK = (base) => `<div class="price-note" style="margin-top:1.
     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
     ${ORDERING
     ? '<span><strong>Minden ár tájékoztató jellegű.</strong> Bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, ezért a kosár összege becslés. A pontos végösszeg a mérés után, átvételkor derül ki. Súlyra (0,25 kg lépésben) vagy darabra, párra is kérheti.</span>'
-    : '<span><strong>Helyben, az üzletben vásárolható.</strong> Minden ár tájékoztató jellegű: bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, a pontos végösszeg a mérés után, a pultnál derül ki. Súlyra vagy darabra, párra is kérheti.</span>'}
+    : '<span><strong>Helyben, az üzletben vásárolható, telefonon is rendelhető.</strong> Minden ár tájékoztató jellegű: bruttó árak, kilogrammra vetítve, a csomagolt zsírnál darabra. Mérlegelt árut adunk, a pontos végösszeg a mérés után, átvételkor derül ki. Súlyra vagy darabra, párra is kérheti.</span>'}
   </div>`;
 
 /* ---- 1. kategória-oldalak ---- */
@@ -402,7 +402,7 @@ const ORD_BLOCKS = {
 <script>location.replace(/^https?:$/.test(location.protocol) ? 'kapcsolat' : 'kapcsolat.html');</script>`],
   'termekek-lead': [
     'Minden, ami a pécsi pultunkban is várja, saját tenyésztésből, kézzel készítve. Keressen, szűrjön fajta szerint, tegye kosárba súlyra vagy darabra, a többit mi intézzük.',
-    'Minden, ami a pécsi pultunkban is várja, saját tenyésztésből, kézzel készítve. Keressen, szűrjön fajta szerint, és vásárolja meg helyben, az üzletünkben.'],
+    'Minden, ami a pécsi pultunkban is várja, saját tenyésztésből, kézzel készítve. Keressen, szűrjön fajta szerint, és vásárolja meg helyben, az üzletünkben, vagy rendelje meg telefonon.'],
   'termekek-note': [PRICE_NOTE_BLOCK(''), PRICE_NOTE_BLOCK('')],
   'termekek-instore': ['', `<div class="wrap" style="padding-bottom:5rem">${INSTORE('wide')}</div>`],
   'noscript-list': ['A terméklistához és a rendeléshez JavaScript szükséges.', NOSCRIPT_LIST],
@@ -411,6 +411,12 @@ const ORD_BLOCKS = {
   <button class="btn btn--solid btn--sm" id="buybarAdd" type="button">Kosárba</button>
 </div>`, ''],
 };
+/* A kézi oldalak rendelés-szövegei (webshopos és telefonos változat): tools/ord-szovegek.js */
+for (const t of require('./ord-szovegek.js')(SITE)) {
+  const prev = ORD_BLOCKS[t.key];
+  if (prev && (prev[0] !== t.on || prev[1] !== t.off)) throw new Error('ütköző @ord kulcs: ' + t.key);
+  ORD_BLOCKS[t.key] = [t.on, t.off];
+}
 const CURRENT = { 'index.html': 'index', 'termekek.html': 'termekek', 'termek.html': 'termekek', 'kiszallitas.html': 'kiszallitas', 'rolunk.html': 'rolunk', 'kapcsolat.html': 'kapcsolat' };
 function syncPage(file) {
   let s = fs.readFileSync(file, 'utf8');

@@ -292,7 +292,7 @@ section{position:relative;padding-block:clamp(4rem,11vh,9rem)}
 .legal p,.legal li{color:var(--muted);margin-bottom:.85rem}
 .legal ul,.legal ol{padding-left:1.3rem;margin-bottom:1rem}
 .legal strong{color:var(--ink)}
-.legal .lead-date{color:#6A6E74;font-size:.88rem;margin-bottom:2.4rem}
+.legal .lead-date{color:#868B91;font-size:.88rem;margin-bottom:2.4rem}
 .minta-badge{display:inline-flex;align-items:center;gap:.5rem;margin:1rem 0 2rem;padding:.55rem 1.05rem;border-radius:8px;
   background:rgba(217,152,56,.14);border:1px solid rgba(217,152,56,.4);color:var(--accent-soft);font-size:.86rem;font-weight:500}
 .legal-note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin:1.4rem 0}

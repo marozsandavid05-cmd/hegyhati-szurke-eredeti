@@ -60,11 +60,10 @@
 <header class="wrap" style="padding-top:9.5rem">
   <p class="eyebrow">Kiszállítás előrendeléssel</p>
   <h1 style="font-size:var(--step-4);margin-top:1.1rem;max-width:14ch">Házhoz visszük, ha előre szól</h1>
-  <p class="lead" style="margin-top:1.3rem">Minden hónap első hetében és a hónap közepén kiszállítunk: pénteken a hegyháti falvakba, szombaton Pécsre és környékére. Kérjük, rendeljen előre a webshopban vagy telefonon, a többit mi intézzük.</p>
+  <p class="lead" style="margin-top:1.3rem">Minden hónap első hetében és a hónap közepén kiszállítunk: pénteken a hegyháti falvakba, szombaton Pécsre és környékére. <!-- @ord kis-lead -->Kérjük, rendeljen előre telefonon vagy e-mailben, a többit mi intézzük.<!-- @/ord --></p>
   <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem">
-    <a href="termekek.html" class="btn btn--solid" data-magnet>Rendelek a webshopból
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a href="tel:+36303007422" class="btn btn--ghost num-tab" data-magnet>+36 30 300 7422</a>
+    <!-- @ord kis-gombok --><a href="tel:+36303007422" class="btn btn--solid num-tab" data-magnet aria-label="Rendelés telefonon: +36 30 300 7422"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>+36 30 300 7422</a>
+    <a href="mailto:hegyhatihus@gmail.com" class="btn btn--ghost" data-magnet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Rendelés e-mailben</a><!-- @/ord -->
   </div>
 </header>
 
@@ -108,7 +107,7 @@
       <p class="eyebrow">Kérjük, előre rendeljenek</p>
       <a href="tel:+36303007422" class="phone-cta__num num-tab" style="display:inline-block;margin-top:.7rem">+36 30 300 7422</a>
     </div>
-    <p style="color:var(--muted);max-width:44ch">Telefonon vagy a webshopban. A rendelés után visszahívjuk, pontosítjuk a súlyokat, a végösszeget és a kiszállítás napját. Köszönjük a bizalmat.</p>
+    <p style="color:var(--muted);max-width:44ch"><!-- @ord kis-telefon -->Telefonon vagy e-mailben. Rendeléskor egyeztetjük a súlyokat, a becsült végösszeget és a kiszállítás napját, e-mailes rendelésnél visszahívjuk.<!-- @/ord --> Köszönjük a bizalmat.</p>
     <a href="termekek.html" class="btn btn--solid" data-magnet style="margin-left:auto">Termékek
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
@@ -123,12 +122,12 @@
       <div class="vrow" data-reveal>
         <span class="vrow__idx">01</span>
         <h3 class="vrow__title">Válassza ki</h3>
-        <p class="vrow__desc">A webshopban súlyra (0,25 kg lépésben) vagy darabra, párra teszi kosárba, amit szeretne. Minden ár tájékoztató jellegű.</p>
+        <p class="vrow__desc"><!-- @ord kis-lepes1 -->A <a href="termekek.html" style="color:var(--accent-soft);text-decoration:underline;text-underline-offset:3px">termékeink</a> között megnézi, mit kér, súlyra (0,25 kg lépésben) vagy darabra, párra. Minden ár tájékoztató jellegű.<!-- @/ord --></p>
       </div>
       <div class="vrow" data-reveal>
         <span class="vrow__idx">02</span>
-        <h3 class="vrow__title">Települést választ</h3>
-        <p class="vrow__desc">A pénztárban kiválasztja a települését, a rendszer mutatja, melyik napon jövünk, és mennyi a szállítási díj.</p>
+        <!-- @ord kis-lepes2 --><h3 class="vrow__title">Felhív minket</h3>
+        <p class="vrow__desc">Telefonon (<a href="tel:+36303007422" class="num-tab" style="color:var(--accent-soft);text-decoration:underline;text-underline-offset:3px">+36 30 300 7422</a>) vagy e-mailben elmondja, mit kér, és melyik településre vigyük. Megmondjuk, melyik napon megyünk, és mennyi a szállítási díj.</p><!-- @/ord -->
       </div>
       <div class="vrow" data-reveal>
         <span class="vrow__idx">03</span>

@@ -106,7 +106,7 @@ const PRICE_NOTE = {
   line: 'Az ár tájékoztató jellegű, a pontos végösszeg a mérés után, átvételkor derül ki.',
   long: 'Mérlegelt árut adunk. Minden feltüntetett ár tájékoztató jellegű, a kosár összege becslés. A pontos végösszeg a mérés után, átvételkor derül ki, rendelés után telefonon egyeztetünk.',
   /* online rendelés nélkül (FLAGS.ORDERING:false) */
-  instore: 'Az ár tájékoztató jellegű, a pontos végösszeg a mérés után, a pultnál derül ki.',
+  instore: 'Az ár tájékoztató jellegű, a pontos végösszeg a mérés után, átvételkor derül ki.',
 };
 
 /* „Helyben, az üzletben vásárolható” blokk (online rendelés nélkül). Egy forrás: a generátor
@@ -122,7 +122,7 @@ function instoreHtml(variant) {
       '<div class="instore__head">' +
         '<p class="eyebrow">Vásárlás</p>' +
         '<h2 class="instore__title" id="instoreTitle">Helyben, az üzletben vásárolható</h2>' +
-        '<p class="instore__lead">A termékeinket a Pécsi Vásárcsarnokban, a pultunknál vásárolhatja meg. ' + PRICE_NOTE.instore + '</p>' +
+        '<p class="instore__lead">A termékeinket a Pécsi Vásárcsarnokban, a pultunknál vásárolhatja meg. Telefonon vagy e-mailben is rendelhet, előrendeléssel házhoz is visszük. ' + PRICE_NOTE.instore + '</p>' +
       '</div>' +
       '<ul class="instore__rows">' +
         '<li>' + pin + '<span><strong>' + SITE.addressShort + '</strong>' + SITE.street +

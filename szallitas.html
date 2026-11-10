@@ -70,7 +70,7 @@
         Átvétel az üzletben
         <span class="pick__fee">ingyenes</span>
       </span>
-      <p class="pick__desc" style="margin-top:.6rem;font-size:.95rem">Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00. Rendelésnél megjelöli, melyik napon jön, mi pedig előkészítjük. A pultnál csak a rendelés-azonosítót kell mondania.</p>
+      <p class="pick__desc" style="margin-top:.6rem;font-size:.95rem">Pécsi Vásárcsarnok, Pécs, Zólyom utca 4. · kedd-péntek 6:00-14:00 · szombat 6:00-12:00. <!-- @ord atvetel-nap -->Telefonos rendelésnél megbeszéljük, melyik napon jön, mi pedig előkészítjük. A pultnál elég a nevét mondania.<!-- @/ord --></p>
     </div>
     <div class="pick__body" data-reveal data-delay="1">
       <span class="pick__title" style="font-size:1.25rem;font-family:var(--font-display)">
@@ -103,17 +103,17 @@
       <div class="vrow" data-reveal>
         <span class="vrow__idx">01</span>
         <h3 class="vrow__title">Rendelés</h3>
-        <p class="vrow__desc">Összeállítja a kosarát a webshopban, megadja az elérhetőségét, és elküldi a rendelést.</p>
+        <p class="vrow__desc"><!-- @ord sz-lepes1 -->Felhív minket vagy e-mailt ír: elmondja, mit kér, és hogy a pultnál veszi át, vagy kiszállítást kér.<!-- @/ord --></p>
       </div>
       <div class="vrow" data-reveal>
         <span class="vrow__idx">02</span>
-        <h3 class="vrow__title">Visszahívás</h3>
-        <p class="vrow__desc">Telefonon visszahívjuk: pontosítjuk a súlyokat, a végösszeget és az átvétel vagy a kiszállítás napját. Mérlegelt árut adunk, ezért a webshopban látott összeg becslés, az árak tájékoztató jellegűek.</p>
+        <!-- @ord sz-lepes2 --><h3 class="vrow__title">Egyeztetés</h3>
+        <p class="vrow__desc">Telefonon pontosítjuk a súlyokat, a becsült végösszeget és az átvétel vagy a kiszállítás napját. Mérlegelt árut adunk, ezért a rendeléskor mondott összeg becslés, az árak tájékoztató jellegűek.</p><!-- @/ord -->
       </div>
       <div class="vrow" data-reveal>
         <span class="vrow__idx">03</span>
         <h3 class="vrow__title">Mérés, csomagolás</h3>
-        <p class="vrow__desc">A rendelését frissen mérjük és gondosan csomagoljuk, vákuumcsomagolást is kérhet a megjegyzésben.</p>
+        <p class="vrow__desc">A rendelését frissen mérjük és gondosan csomagoljuk, <!-- @ord sz-lepes3 -->vákuumcsomagolást is kérhet rendeléskor.<!-- @/ord --></p>
       </div>
       <div class="vrow" data-reveal>
         <span class="vrow__idx">04</span>
@@ -137,16 +137,16 @@
         <div class="faq__a"><div><p>Hűtőtáskában, hűtve szállítunk, és rövid útvonalakon dolgozunk. A pénteki hegyháti és a szombati pécsi kör belefér abba az időbe, ami alatt az áru hőmérséklete biztonságos marad. Átvételkor érdemes minél előbb hűtőbe tenni.</p></div></div>
       </div>
       <div class="faq__item" data-reveal>
-        <button class="faq__q" type="button" aria-expanded="false">Mikor hívnak vissza a rendelésem után?
+        <button class="faq__q" type="button" aria-expanded="false"><!-- @ord sz-gyik-visszahivas -->Mikor hívnak vissza, ha e-mailt írok?<!-- @/ord -->
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq__a"><div><p>Jellemzően a következő nyitvatartási nap előtt, hogy a friss árut pontosan Önre szabva készíthessük elő. Ha sürgős, hívjon minket bátran: +36 30 300 7422.</p></div></div>
       </div>
       <div class="faq__item" data-reveal>
-        <button class="faq__q" type="button" aria-expanded="false">Miért becsült ár szerepel a kosárban?
+        <button class="faq__q" type="button" aria-expanded="false"><!-- @ord sz-gyik-becsult-kerdes -->Miért csak becsült árat mondanak rendeléskor?<!-- @/ord -->
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
-        <div class="faq__a"><div><p>Mert mérlegelt árut adunk: egy csülök vagy egy pár kolbász nem pontosan fél kilóra nő. Minden ár tájékoztató jellegű: a kosárban kg-alapú (darabnál becsült súlyú) becslést lát, a pontos végösszeg a mérés után derül ki. Ezt a visszahíváskor egyeztetjük, és csak akkor véglegesítjük, ha Önnek megfelel.</p></div></div>
+        <div class="faq__a"><div><p>Mert mérlegelt árut adunk: egy csülök vagy egy pár kolbász nem pontosan fél kilóra nő. <!-- @ord sz-gyik-becsult-valasz -->Minden ár tájékoztató jellegű: rendeléskor kg-alapú (darabnál becsült súlyú) becslést mondunk, a pontos végösszeg a mérés után derül ki. Ezt telefonon egyeztetjük,<!-- @/ord --> és csak akkor véglegesítjük, ha Önnek megfelel.</p></div></div>
       </div>
       <div class="faq__item" data-reveal>
         <button class="faq__q" type="button" aria-expanded="false">Visszaküldhetem a terméket, ha meggondolom magam?
@@ -158,13 +158,13 @@
         <button class="faq__q" type="button" aria-expanded="false">Mikor jön a kiszállítás?
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
-        <div class="faq__a"><div><p>Minden hónap első hetében és a hónap közepén: pénteken a hegyháti falvakba, szombaton Pécsre, Kozármislenybe, Abaligetre és Orfűre. Kérjük, rendeljen előre a webshopban vagy telefonon, a pontos időpontot visszahíváskor egyeztetjük. A településlista a <a href="kiszallitas.html" style="color:var(--accent-soft);text-decoration:underline">kiszállítás oldalon</a> található.</p></div></div>
+        <div class="faq__a"><div><p>Minden hónap első hetében és a hónap közepén: pénteken a hegyháti falvakba, szombaton Pécsre, Kozármislenybe, Abaligetre és Orfűre. <!-- @ord sz-gyik-kiszallitas -->Kérjük, rendeljen előre telefonon vagy e-mailben, a pontos időpontot telefonon egyeztetjük.<!-- @/ord --> A településlista a <a href="kiszallitas.html" style="color:var(--accent-soft);text-decoration:underline">kiszállítás oldalon</a> található.</p></div></div>
       </div>
       <div class="faq__item" data-reveal>
         <button class="faq__q" type="button" aria-expanded="false">Hogyan fizethetek?
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
-        <div class="faq__a"><div><p>Átvételkor készpénzzel vagy bankkártyával, az üzletben és a kiszállításnál is. Az online bankkártyás fizetés hamarosan érkezik, jelenleg bemutató módban látható a pénztárban.</p></div></div>
+        <div class="faq__a"><div><p><!-- @ord sz-gyik-fizetes -->Átvételkor készpénzzel vagy bankkártyával, az üzletben és a kiszállításnál is.<!-- @/ord --></p></div></div>
       </div>
     </div>
   </div>
@@ -173,9 +173,8 @@
 <!-- ============ CTA ============ -->
 <section class="lip">
   <div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2rem">
-    <h2 style="font-size:var(--step-3);max-width:18ch" data-reveal>Állítsa össze a kosarát, a többit intézzük</h2>
-    <a href="termekek.html" class="btn btn--solid" data-magnet>Termékeink
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <!-- @ord sz-cta --><h2 style="font-size:var(--step-3);max-width:18ch" data-reveal>Hívjon minket, a többit intézzük</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem"><a href="tel:+36303007422" class="btn btn--solid num-tab" data-magnet aria-label="Rendelés telefonon: +36 30 300 7422"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>+36 30 300 7422</a><a href="mailto:hegyhatihus@gmail.com" class="btn btn--ghost" data-magnet><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Rendelés e-mailben</a></div><!-- @/ord -->
   </div>
 </section>
 
